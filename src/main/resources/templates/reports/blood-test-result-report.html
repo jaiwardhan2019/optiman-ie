@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8" />
+  <title>${REPORT_TITLE}</title>
+  <style type="text/css">
+
+    @page {
+      margin: 18mm 14mm 38mm 14mm;
+
+      @bottom-center {
+        content: " GPdoc Medical Center. Wellington Court, Wellington Street Upper, Phibsborough,  D07VFP5 | 01-2345678 | www.gpdoc.ie ";
+        font-size: 12px;
+        color: #666;
+        padding-top: 1mm;
+        text-decoration: underline;
+      }
+
+
+      /* Smaller top margin ONLY for first page */
+      @page:first {
+        margin: 2mm 14mm 38mm 14mm;
+      }
+
+      @top-right {
+        content: "Page " counter(page) " of " counter(pages);
+        font-size: 12px;
+        color: #666;
+        padding-top: 1mm;
+        text-decoration: underline;
+      }
+    }
+
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 12px;
+      color: #111;
+      line-height: 1.45;
+    }
+
+    .hr-design {
+      color: #666;
+      margin: 0 0 6mm 0;
+    }
+
+
+    .footer-left { float: left; width: 40%; }
+    .footer-center { float: left; width: 40%; text-align: center; }
+    .footer-right { float: right; width: 20%; text-align: right; }
+
+    .page-count:after {
+      content: counter(page) " of " counter(pages);
+    }
+
+    .clearfix { clear: both; }
+
+    .page {
+      page-break-after: auto;
+    }
+
+    .page:not(:last-child) {
+      page-break-after: always;
+    }
+
+    .header-image {
+      width: 40%;
+      height: auto;
+      margin: 0 0 10mm 0;
+      border: 0;
+      display: block;
+    }
+
+    .title {
+      font-size: 22px;
+      font-weight: bold;
+      margin: 0 0 6mm 0;
+      color: #0b2a4a;
+    }
+
+    .meta {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0 0 6mm 0;
+    }
+
+    .meta td {
+      padding: 4px 6px;
+      vertical-align: top;
+      font-size: 14px;
+    }
+
+    .meta .label {
+      width: 28%;
+      color: #444;
+      font-weight: bold;
+      horizontal-align: right;
+    }
+
+    .box {
+      border: 1px solid #cfcfcf;
+      padding: 10px;
+      margin: 0 0 6mm 0;
+      border-radius: 2px;
+    }
+
+    .cover-title {
+      font-size: 26px;
+      font-weight: bold;
+      margin: 0 0 6mm 0;
+      color: black;
+    }
+
+    .cover-text {
+      font-size: 13px;
+      line-height: 1.5;
+      margin: 0 0 8mm 0;
+      color: #111;
+      text-align: justify;
+    }
+    .cover-note {
+      font-size: 13px;
+      line-height: 1.5;
+      margin: 0 0 8mm 0;
+      color: #111;
+      text-align: justify;
+    }
+
+    .page-title {
+      font-size: 24px;
+      font-weight: 450;
+      margin: 0 0 4mm 0;
+      color: #0b2a4a;
+    }
+    .para {
+      font-size: 13px;
+      line-height: 1.5;
+      margin: 0 0 4mm 0;
+      text-align: justify;
+      white-space: pre-wrap;
+    }
+    .doctor_signature {
+      font-size: 14px;
+      line-height: 1.5;
+      margin: 0 0 4mm 0;
+      text-align: right;
+      color: #FF1493;
+      white-space: pre-wrap;
+      font-weight: bold;
+    }
+    .example-image {
+      width: 100%;
+      height: auto;
+      border: 1px solid #e0e0e0;
+      margin-top: 4mm;
+    }
+
+    .section-title {
+      font-size: 12px;
+      font-weight: bold;
+      margin: 0 0 3mm 0;
+      color: #0b2a4a;
+    }
+
+   .patient-detail {
+      font-size: 20px;
+      font-weight: 450;
+      margin: 0 0 4mm 0;
+      color: #0b2a4a;
+    }
+
+    table.results {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 2mm;
+    }
+
+    table.results th {
+      background:  #1a7f84;
+      color: #fff;
+      font-weight: bold;
+      padding: 6px;
+      border: 1px solid #0b2a4a;
+      text-align: left;
+      font-size: 11px;
+    }
+
+    table.results td {
+      padding: 6px;
+      border: 1px solid #d8d8d8;
+      font-size: 11px;
+      vertical-align: top;
+    }
+
+    .flag-high, .flag-low {
+      font-weight: bold;
+      color: #b00020;
+    }
+
+    .flag-normal {
+      color: #0f6d2f;
+      font-weight: bold;
+    }
+
+    .chart {
+      width: 100%;
+      margin-top: 3mm;
+    }
+
+    .chart img {
+      width: 100%;
+      height: auto;
+      border: 1px solid #e0e0e0;
+    }
+
+    .small {
+      font-size: 9px;
+      color: #555;
+    }
+
+    .right {
+      text-align: right;
+    }
+
+    /* Visual bar cards (range + dot) */
+    .visual-results {
+      margin-top: 2mm;
+    }
+
+    .result-card {
+      border: 1px solid #e2e2e2;
+      padding: 10px;
+      margin: 0 0 6mm 0;
+    }
+
+    .test-title {
+      font-size: 20px;
+      font-weight: normal;
+      color: #111;
+      margin: 0 0 2mm 0;
+    }
+
+    .divider {
+      border: 0;
+      border-top: 1px solid #111;
+      margin: 0 0 5mm 0;
+      height: 0;
+    }
+
+    .test-desc {
+      font-size: 13px;
+      color: #111;
+      line-height: 1.45;
+      margin: 0 0 8mm 0;
+    }
+
+    .center {
+      text-align: center;
+    }
+
+    .pill {
+      display: inline-block;
+      padding: 8px 18px;
+      border-radius: 18px;
+      font-size: 14px;
+      font-weight: bold;
+      color: #0b0b0b;
+    }
+
+    .pill-normal { background: #6bd317; }
+    .pill-high   { background: #ff8a00; }
+    .pill-low    { background: #ff8a00; }
+
+    .result-sub {
+      text-align: center;
+      font-size: 16px;
+      font-weight: bold;
+      margin: 0 0 6mm 0;
+    }
+
+    .bar-outer {
+      width: 480px;
+      margin: 0 auto 6mm auto;
+    }
+
+    .bar {
+      position: relative;
+      width: 480px;
+      height: 40px; /* includes labels area */
+    }
+
+    .seg {
+      position: absolute;
+      top: 14px;
+      height: 14px; /* thinner bar like reference */
+      border-radius: 5px;
+    }
+
+    /* Bar math: 130 + 10 + 200 + 10 + 130 = 480 */
+    .seg-low  { left: 0;     width: 130px; background: #ffb02e; }
+    .seg-mid  { left: 140px; width: 200px; background: #66d112; }
+    .seg-high { left: 350px; width: 130px; background: #ffb02e; }
+
+    .dot {
+      position: absolute;
+      top: -2px; /* was 4px → moves it higher above the bar */
+      width: 14px;
+      height: 14px;
+      background: #000;
+      border-radius: 7px;
+    }
+
+    .bar-label {
+      position: absolute;
+      top: 32px;
+      width: 60px;
+      margin-left: -30px; /* center on the left coordinate */
+      text-align: center;
+      font-size: 13px;
+      font-weight: bold;
+      color: #111;
+      white-space: nowrap;
+    }
+
+    .comment {
+      margin-top: 4mm;
+      font-size: 12px;
+    }
+
+    .comment-label {
+      font-weight: bold;
+      margin-right: 6px;
+    }
+
+    .page-count:after {
+      content: counter(page) " of " counter(pages);
+    }
+
+
+
+   // **** FOR THE RESULT TABLE *****
+    .cat-header {
+      display: flex;
+      align-items: center;
+      margin: 10mm 0 2mm 0;
+    }
+
+    .cat-icon {
+      font-size: 16px;
+      margin-right: 6px;
+    }
+
+    .cat-title {
+      font-size: 18px;
+      font-weight: bold;
+      color: #1a7f84;
+    }
+
+    .cat-table {
+      width: 100%;
+      table-layout: fixed;   /* 🔥 KEY FIX */
+      border-collapse: collapse;
+      margin-bottom: 6mm;
+    }
+
+    .cat-table th {
+      color: white;
+      font-size: 12px;
+    }
+
+    .cat-table td {
+      font-size: 12px;
+      word-break: break-all;
+    }
+
+  .abnormal-row {
+    background-color:#FAE8FF;
+    color: #314158;
+  }
+
+  .cell-wrap {
+      white-space: normal;
+      word-wrap: break-word;
+  }
+
+  </style>
+</head>
+
+<body>
+
+
+
+  <!-- PAGE 1: Cover -->
+  <div class="page">
+    <img alt="Header" class="header-image" src="${HEADER_IMAGE_DATA_URL}" />
+    <div class="cover-title">Your Blood Test Result Summary</div>
+    <div> <hr class="hr-design"> </hr> </div>
+    <div class="cover-text">${COVER_TEXT}</div>
+    <div class="page-title">Your details</div>
+
+    <table class="meta">
+      <tr>
+        <td class="label">Patient Demo</td>
+        <td class="patient-detail"> ${PATIENT_NAME} , ${PATIENT_DOB} , ${PATIENT_GENDER} </td>
+      </tr>
+      <tr>
+        <td class="label">Address </td>
+        <td class="patient-detail">${PATIENT_ADDRESS}</td>
+      </tr>
+      <tr>
+        <td class="label">Phone  </td>
+        <td class="patient-detail">${PATIENT_PHONE}</td>
+      </tr>
+      <tr>
+        <td class="label">  Email </td>
+        <td class="patient-detail">  ${PATIENT_EMAIL} </td>
+      </tr>
+      <tr>
+        <td class="label">Sample Date </td>
+        <td class="patient-detail">${COLLECTION_DATE}</td>
+      </tr>
+      <tr>
+        <td class="label">Date of assessment </td>
+        <td class="patient-detail">${REPORT_DATE}</td>
+      </tr>
+      <tr>
+        <td class="label">Location of health check </td>
+        <td class="patient-detail">GPDOC Medical center , dublin , www.gpdoc.ie  </td>
+      </tr>
+
+    </table>
+
+    <div> <br> </br> </div>
+
+    <div class="cover-note">
+      <span style="color:red;font-weight: bold; font-size: 13px;"> Remark :  </span> Please note that blood tests and health checks on their own are not a replacement for consulting a doctor, especially if you are feeling unwell. You should not make a diagnosis or begin any treatment without first speaking to a qualified healthcare professional. While some results that fall outside the normal range may not be clinically significant, others may require further attention. Test results should always be interpreted in the context of your overall health, which can only be properly assessed through a full medical history and examination by a doctor.*
+    </div>
+  </div>
+
+
+
+  <!-- PAGE 2: Introduction -->
+  <div class="page">
+
+    <div class="page-title">An introduction to your blood test</div>
+    <div class="para">Thanks on taking a proactive step towards improving your health and well being. We are pleased to provide you with this report, outlining the findings from your blood test.Blood testing is a valuable tool for identifying potential underlying health risks. Its purpose is to detect any early signs of concern, enabling you to make informed decisions about lifestyle changes, pursue further investigations if needed, or begin appropriate treatment—helping you achieve a longer, healthier, and more fulfilling life.</div>
+
+    <div class="page-title">Your results</div>
+    <div class="para">If your blood test results fall within the normal range, this generally indicates a low likelihood of the conditions being tested for. However, it does not guarantee that these conditions will not develop in the future—it simply reflects your current level of risk. For this reason, regular testing is recommended.If your results suggest a higher risk, it may indicate the possibility of an underlying condition. In such cases, it is important to consult your doctor, who may recommend further tests to confirm a diagnosis or provide guidance on managing any identified risk factors. A doctor can also offer appropriate treatment, advice, and support based on a more comprehensive assessment, including your medical history and a clinical examination.Early detection of potential health issues can be lifesaving. That said, blood tests are not always definitive. Some serious conditions may not be detected through routine testing, while other results may raise concerns that are later found to be harmless after further investigation. Although screening can sometimes cause unnecessary worry, identifying possible health risks early is generally beneficial, and blood tests remain a valuable tool for uncovering a wide range of conditions that might otherwise go unnoticed. If you have any questions about your results or need further clarification, you should speak with your doctor, who can interpret your results in the context of your overall health and lifestyle. The doctors who reviewed your results for this report have provided general explanations and guidance on what your results may mean, along with suggestions to help support your health. You are encouraged to discuss your results with your GP, particularly if you have any concerns or are experiencing symptoms.
+    </div>
+
+  </div>
+
+  <!-- PAGE 3: Understanding -->
+  <div class="page">
+    <div class="page-title">Understanding your results</div>
+    <div class="para">This below is an illustrative example only and does not represent your actual blood test results. Its purpose is to help you understand how to read the results shown later in this report.Laboratory results are presented alongside reference ranges, which are derived from typical values observed in a large group of healthy individuals of the same age and gender.It is important to note that results outside the reference range can still occur in healthy individuals, while those with underlying conditions may sometimes have results within the normal range. If any of your results fall outside the reference range—or if you are experiencing symptoms despite normal results—you may require further testing or wish to discuss them with your GP. For ease of understanding, your results are also displayed in a visual format. Results highlighted in amber fall outside the standard range, while those within the normal range are shown in green. Please refer to the illustration below.</div>
+    <img alt="Understanding results example" class="example-image" src="${UNDERSTANDING_IMAGE_DATA_URL}" />
+    <div class="para">If any part of your report shows an  invalid result,  there is no need for concern. Please contact our Customer Service team, and if necessary, we will arrange a repeat blood test at no cost or provide a home testing kit that you can return to our clinic.</div>
+  </div>
+
+
+  <!-- FULL RESULTS TABLE WITH THE DATA  -->
+  <div class="page">
+    <div class="page-title">Your results finding in detail </div>
+    ${RESULT_TABLES}
+  </div>
+
+
+
+  <!-- PAGE 4: Doctor report -->
+  <div class="page">
+    <hr class="hr-design" />
+    <div class="page-title">${DOCTOR_REPORT_TITLE}</div>
+    <div class="para">${DOCTOR_REPORT_TEXT}</div>
+    <div class="doctor_signature">Dr.&nbsp; ${DOCTOR_NAME}</div>
+    <hr class="hr-design" />
+  </div>
+
+
+  <!-- PAGE 5: Tips -->
+  <!--
+  <div class="page">
+    <div class="page-title">${TIPS_TITLE}</div>
+    <div class="para">${TIPS_TEXT}</div>
+  </div>
+   -->
+
+  <!-- PAGE 6 CATEGORY PAGES -->
+  ${CATEGORY_PAGES}
+
+
+</body>
+</html>
