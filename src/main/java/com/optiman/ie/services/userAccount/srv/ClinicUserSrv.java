@@ -1,15 +1,15 @@
 package com.optiman.ie.services.userAccount.srv;
 
 import ch.qos.logback.core.util.StringUtil;
-import com.gp4less.repository.ClinicUserDao;
 
 import com.optiman.ie.services.userAccount.database.ClinicUser;
+import com.optiman.ie.services.userAccount.database.ClinicUserRepo;
 import com.optiman.ie.util.CommonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.UnsupportedEncodingException;
+
 import java.text.ParseException;
 import java.util.Map;
 import java.util.Optional;
@@ -27,9 +27,10 @@ public class ClinicUserSrv {
     @Autowired
     PasswordValidation passwordValidation;
 
-
     @Autowired
-    private ClinicUserDao clinicUserdao;
+    ClinicUserRepo clinicUserRepo;
+
+
 
     public String createClinicUser(Map<String, String> data, ClinicUser clinicUser) {
 
@@ -84,7 +85,7 @@ public class ClinicUserSrv {
        // newClinicUser.setGdprConsent("Yes");
 
         try {
-            clinicUserdao.save(newClinicUser);
+            clinicUserRepo.save(newClinicUser);
         }catch (Exception e){
             log.error("Error : {} ",e.getMessage());
             return "Error while saving user details : "+e.getMessage()+", \n please contact support !!";
@@ -102,7 +103,7 @@ public class ClinicUserSrv {
 
         if(data.isEmpty()){return "Data object is empty !!!";}
 
-        ClinicUser newClinicUser = clinicUserdao.findById(data.get("userId")).orElse(null);
+        ClinicUser newClinicUser = clinicUserRepo.findById(data.get("userId")).orElse(null);
 
         String accountType = data.get("accountType");
         newClinicUser.setAccountType(accountType);
@@ -137,7 +138,7 @@ public class ClinicUserSrv {
 
 
         try {
-            clinicUserdao.save(newClinicUser);
+            clinicUserRepo.save(newClinicUser);
         }catch (Exception e){
             log.error("Error : {} ",e.getMessage());
             return "Error while saving user details : "+e.getMessage()+", \n please contact support !!";
@@ -169,7 +170,7 @@ public class ClinicUserSrv {
 
 
 
-        Optional<ClinicUser> optionalClinicUser = Optional.ofNullable(clinicUserdao.findByEmailId(userLoginName));
+        Optional<ClinicUser> optionalClinicUser = Optional.ofNullable(clinicUserRepo.findByEmailId(userLoginName));
         if(optionalClinicUser.isPresent()){
             ClinicUser clinicUser = optionalClinicUser.get();
             String storedPassword = clinicUser.getPassword();
@@ -190,7 +191,7 @@ public class ClinicUserSrv {
 
 
     public ClinicUser findUserByEmailId(String emailId){
-        return clinicUserdao.findByEmailId(emailId);
+        return clinicUserRepo.findByEmailId(emailId);
     }
 
 

@@ -54,7 +54,7 @@
                         <div class="card-body">
 
                           <div class="pt-4 pb-2">
-                            <h5 class="card-title text-center pb-0 fs-4">Optiman Admin Login </h5>
+                            <h5 class="card-title text-center pb-0 fs-4">Optiman CMS Login </h5>
                             <p class="text-center small">Enter your username & password to login</p>
                                <p class="text-center small" style="color:red;">${loginStatus}</p>
                           </div>
