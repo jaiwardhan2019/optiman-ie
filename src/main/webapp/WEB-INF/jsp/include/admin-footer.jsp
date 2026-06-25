@@ -1,7 +1,7 @@
   <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
   <footer id="footer" class="footer">
     <div class="copyright">
-      &copy; Copyright <strong><span> GP4Less  </span></strong>. All Rights Reserved
+      &copy; Copyright <strong><span> Optiman  </span></strong>. All Rights Reserved
     </div>
   </footer><!-- End Footer -->
 
@@ -38,102 +38,6 @@
 
         <script>
 
-            // Set first function to run every 520 seconds
-            setInterval(updateServiceNotification, 520000);
-
-            // Set second function to run every 520 seconds
-            //setInterval(updateMessageFromPaitent, 520000);
-
-            // Run them immediately on page load too
-            updateServiceNotification();
-            updateMessageFromPaitent();
-
-
-              //--- Fetch Notification top 15 on every 60 second
-             async function updateServiceNotification(){
-                    $.ajax({
-                                type : 'GET',
-                                url : 'get-notification',
-                                dataType : 'json',
-                                contentType : 'application/json',
-                                success : function(result) {
-                                    var s = '';
-                                    for (var i = 0; i < result.length; i++) {
-
-                                        if(result[i].requestType === 'Sick Note'){
-                                            s += '<a href=${pageContext.request.contextPath}/view-request-sicknote?requestNo='+result[i].requestId+'&messageId='+result[i].messageId+'>';
-                                        }
-
-                                        if(result[i].requestType === 'Prescription'){
-                                           s += '<a href=${pageContext.request.contextPath}/view-request-prescription?requestNo='+result[i].requestId+'&messageId='+result[i].messageId+'>';
-                                        }
-
-                                       if(result[i].requestType === 'Clinic task'){
-                                           s += '<a href=${pageContext.request.contextPath}/view-task-detail?refNumber='+result[i].requestId+'>';
-                                        }
-
-                                        s += '<li class="notification-item"> <i class="bi bi-check-circle text-success"></i><div>';
-                                        s += '<h4>'+ result[i].requestType+'</h4>';
-                                        s += '<p>'+ result[i].requestFrom+'</p>';
-                                        s += '<p>'+ getTimeDifference(result[i].createDate)+'</p>';
-                                        s += '</div></li> ';
-                                        s += '<li><hr class="dropdown-divider"> </li>';
-                                        s += '</a>';
-                                    }
-
-                                   //-- If there is notification available then render detail on the bell icon
-                                   if(i > 0){
-                                       document.getElementById("notificationCount").innerHTML=i;
-                                       document.getElementById("messageWithNumber").innerHTML="You have "+ i +" new service request";
-                                       document.getElementById("liContent").innerHTML=s;
-                                   }
-
-                                }
-                    }); //--- End of ajax cal
-
-              } //-- End of function
-
-
-
-
-
-              //--- Fetch patient message on every 15 second
-             async function updateMessageFromPaitent(){
-                    $.ajax({
-                                type : 'GET',
-                                url : 'get-message-for-user-from-db?userId=${ADMIN_SESSION.userId}',
-                                dataType : 'json',
-                                contentType : 'application/json',
-                                success : function(result) {
-                                    var messageBody = '';
-                                    for (var i = 0; i < result.length; i++) {
-                                        messageBody += '<li class="message-item">';
-
-                                        if(result[i].requestType === 'Sick Note'){
-                                            messageBody += '<a href=${pageContext.request.contextPath}/view-request-sicknote?requestNo='+result[i].requestId+'&messageId='+result[i].messageId+'>';
-                                        }
-
-                                        if(result[i].requestType === 'Prescription'){
-                                           messageBody += '<a href=${pageContext.request.contextPath}/view-request-prescription?requestNo='+result[i].requestId+'&messageId='+result[i].messageId+'>';
-                                        }
-
-                                        messageBody += '<div style="margin-left:25px"> <h4 >'+ result[i].messageFrom+'</h4>';
-                                        messageBody += '<p>'+result[i].messageBody+'</p>';
-                                        messageBody += '<p>'+getTimeDifference(result[i].createDate)+'</p>';
-                                        messageBody += '</div></a></li>';
-                                        messageBody += '<li><hr class="dropdown-divider"></li>';
-                                    }
-
-                                   //-- If there is notification available then render detail on the bell icon
-                                   if(i > 0){
-                                       document.getElementById("messageCount").innerHTML=i;
-                                       document.getElementById("messageWithNumber_1").innerHTML="You have "+ i +" new message";
-                                       document.getElementById("messageContent").innerHTML=messageBody;
-                                   }
-                                }
-                    });//-- End of ajax cal
-
-              } // -- End of function
 
 
             function openFileInNewWindow(fileName) {
@@ -167,7 +71,7 @@
 
         //--- Disable right click
         document.addEventListener('contextmenu', function (event) {
-           event.preventDefault();
+           //event.preventDefault();
         });
 
 

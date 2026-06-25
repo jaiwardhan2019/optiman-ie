@@ -11,9 +11,9 @@
 <%@attribute name="foot_area" fragment="true" %>
 <html>
  <title>${title}</title>
-      <jsp:include page="../include/admin-header.jsp"/>
+      <jsp:include page="include/admin-header.jsp"/>
          <body id="bodyPart">
              <jsp:invoke fragment="body_area"/>
          </body>
-      <jsp:include page="../include/admin-footer.jsp"/>
+      <jsp:include page="include/admin-footer.jsp"/>
 </html>

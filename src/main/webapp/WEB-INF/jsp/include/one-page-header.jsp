@@ -6,7 +6,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Dashboard - GP4Less    </title>
+  <title>Dashboard - Optiman    </title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -47,7 +47,7 @@
 
 <div class="d-flex align-items-center">
   <a href="" class="logo d-flex align-items-center">
-    <span class="d-none d-lg-block">GP4Less - Admin</span>
+    <span class="d-none d-lg-block">Optiman - Admin</span>
   </a>
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

@@ -6,7 +6,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Dashboard - GP4Less    </title>
+  <title>Dashboard - Optiman    </title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -47,7 +47,7 @@
 
     <div class="d-flex align-items-center justify-content-between">
       <a href="Javascript:void();" onClick="openAdminUrl('admin-dashboard');" class="logo d-flex align-items-center">
-        <span class="d-none d-lg-block">GP4Less - Admin</span>
+        <span class="d-none d-lg-block">Optiman - Admin</span>
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
@@ -449,7 +449,7 @@
 <c:if test="${empty ADMIN_SESSION.logonStatus or not fn:contains(ADMIN_SESSION.logonStatus, 'VALIDATED')}">
     <script>
         // Example: Force logout if session is invalid
-        window.location.href = "${pageContext.request.contextPath}/adminlogout";
+        //window.location.href = "${pageContext.request.contextPath}/adminlogout";
     </script>
 </c:if>
 
