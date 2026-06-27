@@ -46,7 +46,7 @@
   <header id="header" class="header fixed-top d-flex align-items-center">
 
     <div class="d-flex align-items-center justify-content-between">
-      <a href="Javascript:void();" onClick="openAdminUrl('admin-dashboard');" class="logo d-flex align-items-center">
+      <a href="Javascript:void();" onClick="openAdminUrl('admin-home');" class="logo d-flex align-items-center">
         <span class="d-none d-lg-block">Optiman - Admin</span>
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
@@ -177,7 +177,7 @@
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="${pageContext.request.contextPath}/adminlogout">
+              <a class="dropdown-item d-flex align-items-center" href="${pageContext.request.contextPath}/admin-logout">
                 <i class="bi bi-box-arrow-right"></i>
                 <span>Sign Out</span>
               </a>
@@ -197,64 +197,15 @@
     <ul class="sidebar-nav" id="sidebar-nav">
 
       <li class="nav-item">
-        <a class="nav-link " href="Javascript:void();" onClick="openAdminUrl('admin-dashboard');" >
+        <a class="nav-link " href="Javascript:void();" onClick="openAdminUrl('admin-home');" >
           <i class="bi bi-grid"></i>
           <span>Dashboard</span>
         </a>
       </li><!-- End Dashboard Nav -->
 
-<!--
-      <li class="nav-item">
-        <a class="nav-link " href="Javascript:void();" onClick="openAdminUrl('clinic-booking-dashboard');" >
-          <i class="bi bi-calendar2-check"></i>
-          <span>Appointments </span>
-        </a>
-      </li>
--->
-
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-menu-button-wide"></i><span>Service Request </span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-
-          <li>
-            <a href="Javascript:void();" onClick="openAdminUrl('patient-all-request');">
-              <i class="bi bi-list-task" style="font-size:1.2em;"></i><span>All Request </span>
-            </a>
-          </li>
-          <li>
-            <a href="Javascript:void();" onClick="openAdminUrl('all-sicknote-request');">
-              <i class="bi bi-award" style="font-size:1.2em;"></i><span>Sick Note</span>
-            </a>
-          </li>
-          <li>
-            <a href="Javascript:void();" onClick="openAdminUrl('all-prescription-request');">
-              <i class="bi bi-prescription2" style="font-size:1.2em;"></i><span> Prescription </span>
-            </a>
-          </li>
-
-          <li>
-            <a href="Javascript:void();" onClick="openAdminUrl('consultation-list');">
-              <i class="fa-sharp fa-solid fa-stethoscope" style="color:#FF1493; font-size:1.3em;"></i>
-              <span> Consultation </span>
-            </a>
-          </li>
-
-          <li>
-            <a href="Javascript:void();" onClick="openAdminUrl('my-task-list');">
-              <i class="bi bi-pencil-square" style="font-size:1.2em;"></i> <span> My Task  </span>
-            </a>
-          </li>
-        </ul>
-      </li><!-- End Components Nav -->
-
-
-
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#patients-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-people"></i><span> Patients </span><i class="bi bi-chevron-down ms-auto"></i>
+          <i class="bi bi-people" style="font-size:1.2em;color:#FF1493;"></i> <span> Patients </span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="patients-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
@@ -263,13 +214,28 @@
             </a>
           </li>
           <li>
-            <a class="nav-link collapsed" href="Javascript:void()" onClick="openAdminUrl('manage-patient-documents')">
-              <i class="bi bi-file-diff" style="font-size:1.3em;" ></i><span> Patient Documents </span>
+            <a  href="Javascript:void()" onClick="openAdminUrl('create-new-patient')">
+              <i class="bi bi-person-plus" style="font-size:1.3em;" ></i><span> Create Patient </span>
+            </a>
+          </li>
+        </ul>
+      </li><!-- End Patient Nav -->
+
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#patients-document-nav" data-bs-toggle="collapse" href="#">
+           <i class="bi bi-file-diff" style="font-size:1.2em;color:#FF1493;"></i>
+           <span> Patient Documents </span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="patients-document-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a  href="Javascript:void()" onClick="openAdminUrl('manage-patient-documents')">
+              <i class="bi bi-card-list" style="font-size:1.3em;" ></i><span> Documents List </span>
             </a>
           </li>
           <li>
-            <a class="nav-link collapsed" href="Javascript:void()" onClick="openAdminUrl('create-new-patient')">
-              <i class="bi bi-person-plus" style="font-size:1.3em;" ></i><span> Create Patient </span>
+            <a  href="Javascript:void()" onClick="openAdminUrl('create-new-patient')">
+              <i class="bi bi-file-earmark-diff" style="font-size:1.3em;" ></i><span> Manage Documents  </span>
             </a>
           </li>
         </ul>
@@ -279,33 +245,21 @@
 
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-layout-text-window-reverse"></i><span> Setup Data Template </span><i class="bi bi-chevron-down ms-auto"></i>
+          <i class="bi bi-layout-text-window-reverse" style="color:#FF1493;"></i><span> Setup Data Template </span>
+          <i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
 
           <li>
-            <a class="nav-link collapsed" href="Javascript:void()" onClick="openAdminUrl('manage_templates')">
-              <i class="bi bi-file-easel"style="font-size:1.2em;"></i><span> Setup Template </span>
+            <a  href="Javascript:void()" onClick="openAdminUrl('manage_templates')">
+              <i class="bi bi-file-easel"style="font-size:1.2em;"></i><span> Template Heading </span>
             </a>
           </li>
           <li>
-            <a class="nav-link collapsed" href="Javascript:void()" onClick="openAdminUrl('manage_data_templates')">
-              <i class="bi bi-file-easel" style="font-size:1.2em;"></i><span> Setup Data Template </span>
+            <a  href="Javascript:void()" onClick="openAdminUrl('manage_data_templates')">
+              <i class="bi bi-file-easel" style="font-size:1.2em;"></i><span> Template Data </span>
             </a>
           </li>
-
-          <li>
-            <a class="nav-link collapsed" href="Javascript:void()" onClick="openAdminUrl('manage_ai_databank')">
-              <i class="bi bi-file-easel" style="font-size:1.2em;"></i><span>AI-Advise (HealthLink XML) </span>
-            </a>
-          </li>
-
-          <li>
-            <a href="Javascript:void();" onClick="openAdminUrl('setup-medical-question')">
-              <i class="bi bi-patch-question" style="font-size:1.2em;"></i><span> Medical Questions </span>
-            </a>
-          </li>
-
         </ul>
       </li>
 
@@ -315,46 +269,9 @@
                   <i class="bi bi-person-bounding-box" style="color:red;"></i> <span> Admin  </span><i class="bi bi-chevron-down ms-auto"></i>
                 </a>
                 <ul id="admin-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-
-                     <li>
-                       <a href="Javascript:void();" onClick="openAdminUrl('manage-booking-slots')">
-                         <i class="bi bi-clock-history" style="font-size:1.2em;"></i> <span> Manage Booking Slots </span>
-                       </a>
-                     </li>
-
-
                   <li>
                     <a href="Javascript:void();" onClick="openAdminUrl('clinic-user-list')">
                       <i class="bi bi-people" style="font-size:1.2em;"></i><span> Staff Account </span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="Javascript:void();" onClick="openAdminUrl('all-task-list-admin')">
-                      <i class="bi-list-task" style="font-size:1.2em;"></i><span> Task list </span>
-                    </a>
-                  </li>
-
-                  <li>
-                    <a href="Javascript:void();" onClick="openAdminUrl('manage-hospital')">
-                      <i class="bi bi-hospital" style="font-size:1.2em;"></i> <span> Manage Hospital </span>
-                    </a>
-                  </li>
-
-                  <li>
-                    <a href="Javascript:void();" onClick="openAdminUrl('manage-pharmacy')">
-                      <i class="bi bi-prescription2" style="font-size:1.2em;"></i> <span> Manage Pharmacy </span>
-                    </a>
-                  </li>
-
-                  <li>
-                    <a href="Javascript:void();" onClick="openAdminUrl('manage-icd-code?action=list')">
-                      <i class="bi bi-file-medical" style="font-size:1.3em;color:#FF1493;"></i> <span> Manage ICD Code  </span>
-                    </a>
-                  </li>
-
-                 <li>
-                    <a href="Javascript:void();" onClick="openAdminUrl('manage-medicine?action=list')">
-                      <i class="bi bi-capsule" style="font-size:1.3em;color:#FF1493;"></i> <span> Manage Medicine   </span>
                     </a>
                   </li>
 
@@ -368,47 +285,23 @@
       <li class="nav-heading">Pages</li>
 
         <li class="nav-item">
-         <a class="nav-link collapsed" href="Javascript:void()" onClick="openAdminUrl('consultation-list')">
+         <a class="nav-link collapsed" href="Javascript:void()"  onClick="alertUnderConstruction()">
             <i class="fa-sharp fa-solid fa-stethoscope" style="font-size:1.1em;color:#FF1493;"></i>
             <span> Consultation </span>
           </a>
         </li><!-- End Profile Page Nav -->
 
 
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="Javascript:void()" onClick="openAdminUrl('manage-executive-report');">
-              <i class="bi bi-journal-medical" style="color:#FF1493; font-size:1.3em;"></i> </i>
-              <span> Executive Test Report</span>
-            </a>
-        </li><!-- End Blank Page Nav -->
-
-
-
-
       <li class="nav-item">
-       <a class="nav-link collapsed" href="Javascript:void()" onClick="openAdminUrl('manage-appointment')">
-          <i class="bi bi-camera-video" style="font-size:1.2em;color:blue;"></i>
-          <span>Quick Meeting Link</span>
-        </a>
-      </li><!-- End Profile Page Nav -->
-
-
-      <li class="nav-item">
-       <a class="nav-link collapsed" href="Javascript:void()" onClick="openAdminUrl('ai-voice-text')">
-          <span><i class="bi bi-mic" style="font-size:1.2em;color:red;"></i>AI - Voice to text </span>
+       <a class="nav-link collapsed" href="Javascript:void()" onClick="alertUnderConstruction()">
+          <span><i class="bi bi-mic"  style="font-size:1.2em;color:#FF1493;"></i>AI - Voice to text </span>
         </a>
       </li><!-- End Profile Page Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="Javascript:void()" onClick="openAdminUrlNewWindows('login-health-mail')">
-            <img width="55%" src="assets/img/healthmail.png" alt="Get Health Mail Token" title="Get Health Mail Token">
-        </a>
-      </li>
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="Javascript:void()" onClick="openAdminUrl('reception-tvlink')">
-          <i class="bi bi-tv-fill"></i>
-          <span>Reception / TV </span>
+        <a class="nav-link collapsed" href="Javascript:void()" onClick="alertUnderConstruction()">
+          <i class="bi bi-info-circle"  style="font-size:1.2em;color:#FF1493;"></i>
+          <span> Help Support </span>
         </a>
       </li><!-- End Contact Page Nav -->
 
@@ -449,7 +342,7 @@
 <c:if test="${empty ADMIN_SESSION.logonStatus or not fn:contains(ADMIN_SESSION.logonStatus, 'VALIDATED')}">
     <script>
         // Example: Force logout if session is invalid
-        //window.location.href = "${pageContext.request.contextPath}/adminlogout";
+        window.location.href = "${pageContext.request.contextPath}/admin-logout";
     </script>
 </c:if>
 
@@ -486,7 +379,7 @@
           }
 
           function logoutAdminUser() {
-            window.location.href = '${pageContext.request.contextPath}/adminlogout';
+            window.location.href = '${pageContext.request.contextPath}/admin-logout';
           }
 
 

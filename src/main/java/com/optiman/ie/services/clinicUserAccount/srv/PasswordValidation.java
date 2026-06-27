@@ -1,4 +1,4 @@
-package com.optiman.ie.services.userAccount.srv;
+package com.optiman.ie.services.clinicUserAccount.srv;
 
 import org.springframework.stereotype.Service;
 

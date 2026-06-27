@@ -1,9 +1,9 @@
-package com.optiman.ie.services.userAccount.srv;
+package com.optiman.ie.services.clinicUserAccount.srv;
 
 import ch.qos.logback.core.util.StringUtil;
 
-import com.optiman.ie.services.userAccount.database.ClinicUser;
-import com.optiman.ie.services.userAccount.database.ClinicUserRepo;
+import com.optiman.ie.services.clinicUserAccount.repository.ClinicUser;
+import com.optiman.ie.services.clinicUserAccount.repository.ClinicUserDao;
 import com.optiman.ie.util.CommonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +28,7 @@ public class ClinicUserSrv {
     PasswordValidation passwordValidation;
 
     @Autowired
-    ClinicUserRepo clinicUserRepo;
+    ClinicUserDao clinicUserDao;
 
 
 
@@ -85,7 +85,7 @@ public class ClinicUserSrv {
        // newClinicUser.setGdprConsent("Yes");
 
         try {
-            clinicUserRepo.save(newClinicUser);
+            clinicUserDao.save(newClinicUser);
         }catch (Exception e){
             log.error("Error : {} ",e.getMessage());
             return "Error while saving user details : "+e.getMessage()+", \n please contact support !!";
@@ -103,7 +103,7 @@ public class ClinicUserSrv {
 
         if(data.isEmpty()){return "Data object is empty !!!";}
 
-        ClinicUser newClinicUser = clinicUserRepo.findById(data.get("userId")).orElse(null);
+        ClinicUser newClinicUser = clinicUserDao.findById(data.get("userId")).orElse(null);
 
         String accountType = data.get("accountType");
         newClinicUser.setAccountType(accountType);
@@ -138,7 +138,7 @@ public class ClinicUserSrv {
 
 
         try {
-            clinicUserRepo.save(newClinicUser);
+            clinicUserDao.save(newClinicUser);
         }catch (Exception e){
             log.error("Error : {} ",e.getMessage());
             return "Error while saving user details : "+e.getMessage()+", \n please contact support !!";
@@ -170,7 +170,7 @@ public class ClinicUserSrv {
 
 
 
-        Optional<ClinicUser> optionalClinicUser = Optional.ofNullable(clinicUserRepo.findByEmailId(userLoginName));
+        Optional<ClinicUser> optionalClinicUser = Optional.ofNullable(clinicUserDao.findByEmailId(userLoginName));
         if(optionalClinicUser.isPresent()){
             ClinicUser clinicUser = optionalClinicUser.get();
             String storedPassword = clinicUser.getPassword();
@@ -191,7 +191,7 @@ public class ClinicUserSrv {
 
 
     public ClinicUser findUserByEmailId(String emailId){
-        return clinicUserRepo.findByEmailId(emailId);
+        return clinicUserDao.findByEmailId(emailId);
     }
 
 

@@ -1,4 +1,4 @@
-package com.optiman.ie.services.userAccount.database;
+package com.optiman.ie.services.clinicUserAccount.repository;
 
 import jakarta.persistence.*;
 import lombok.Data;

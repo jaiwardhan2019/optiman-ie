@@ -13,7 +13,7 @@
           <h1>Dashboard</h1>
           <nav>
             <ol class="breadcrumb">
-              <li class="breadcrumb-item"><a href="admin-dashboard">Home</a></li>
+              <li class="breadcrumb-item"><a href="admin-home">Home</a></li>
               <li class="breadcrumb-item active">Dashboard</li>
             </ol>
           </nav>
@@ -45,68 +45,6 @@
                           </div>
                       </a>
                     </div><!-- End Patient Card -->
-
-                    <div class="col-xxl-3 col-md-6">
-                      <a href="Javascript:void();" onClick="openAdminUrl('consultation-list')">
-                          <div class="card info-card sales-card">
-                            <div class="card-body">
-                              <h5 class="card-title"> Consultation   </span></h5>
-                              <div class="d-flex align-items-center">
-                                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                    <i class="fa-sharp fa-solid fa-stethoscope" style="font-size:1.1em;color:#FF1493;"></i>
-                                </div>
-                                <div class="ps-3">
-                                  <h6>${AdminDashBoard.patientConsultationCount}</h6>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                      </a>
-                    </div>
-
-
-                    <div class="col-xxl-3 col-md-6">
-                      <a href="Javascript:void();" onClick="openAdminUrl('clinic-booking-dashboard');">
-                          <div class="card info-card sales-card">
-                            <div class="card-body">
-                              <h5 class="card-title"> Video | Appointment  </span></h5>
-                              <div class="d-flex align-items-center">
-                                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                  <i class="bi bi-camera-video" style="color:#FF1493;"></i>
-                                </div>
-                                <div class="ps-3">
-                                  <h6>${AdminDashBoard.bookingCount}</h6>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                      </a>
-                    </div>
-
-
-
-                    <!-- Service Request Card -->
-                    <div class="col-xxl-3 col-md-6">
-                      <a href="Javascript:void();" onClick="openAdminUrl('patient-all-request');">
-                          <div class="card info-card sales-card">
-                            <div class="card-body">
-                              <h5 class="card-title">Service request </span></h5>
-                              <div class="d-flex align-items-center">
-                                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                  <i class="bi bi-heart-pulse" style="color:#E62E35;"></i>
-                                </div>
-                                <div class="ps-3">
-                                  <h6>${AdminDashBoard.service_request_count}</h6>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                      </a>
-                    </div>
-
-                    <!-- End Service Request Card -->
-
-
 
 
                     <!-- Clinic Documents Card -->

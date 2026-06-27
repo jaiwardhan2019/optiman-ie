@@ -1,7 +1,7 @@
   <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
   <footer id="footer" class="footer">
     <div class="copyright">
-      &copy; Copyright <strong><span> Optiman  </span></strong>. All Rights Reserved
+      &copy; Copyright <strong><span> Gp4Less  </span></strong>. All Rights Reserved
     </div>
   </footer><!-- End Footer -->
 
