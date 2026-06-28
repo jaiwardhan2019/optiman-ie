@@ -7,6 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -43,7 +44,7 @@ public interface PatientAccountDao extends CrudRepository<PatientAccount, Intege
     List<PatientAccount> findPatientAccountsIgnoreCase(
             @Param("firstName") String firstName,
             @Param("lastName") String lastName,
-            @Param("birthDate") Date birthDate,
+            @Param("birthDate") LocalDate birthDate,   // changed
             @Param("sex") String sex
     );
 

@@ -1,5 +1,6 @@
 package com.optiman.ie.services.patientAccount.srv;
 
+import com.optiman.ie.contant.ServiceType;
 import com.optiman.ie.services.clinicUserAccount.repository.ClinicUser;
 import com.optiman.ie.services.patientAccount.repository.PatientAccount;
 import com.optiman.ie.services.patientAccount.repository.PatientAccountDao;
@@ -14,12 +15,16 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.security.Key;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.*;
 
 @Slf4j
@@ -28,6 +33,8 @@ public class PatientAccountSrv {
 
     public static final String USER_VALIDATED = "VALIDATED";
     public static final String NOT_VALIDATED_YET = "IN_2FA_PROCESS";
+
+    private final String UPDATE_STATUS = "success";
 
     private static final String USER_ID_DISABLE = "Your account is not active !! " +
             "Please check your email and make sure activate your account with the given link !! &nbsp;&nbsp;" +
@@ -48,16 +55,24 @@ public class PatientAccountSrv {
     PasswordValidation passwordValidation;
     //EmailService emailService;
 
-    @Autowired
+
     CommonUtil commonUtil;
 
-    @Autowired
+
     private Key secretKey;
 
 
-    @Autowired
+
     EHRService ehrService;
 
+
+    public PatientAccountSrv(PatientAccountDao paitentAccountDao, PasswordValidation passwordValidation, CommonUtil commonUtil, Key secretKey, EHRService ehrService) {
+        this.paitentAccountDao = paitentAccountDao;
+        this.passwordValidation = passwordValidation;
+        this.commonUtil = commonUtil;
+        this.secretKey = secretKey;
+        this.ehrService = ehrService;
+    }
 
     public PatientAccount getPatientAccountByUserId(String userId) {
         return paitentAccountDao.findByuserId(userId);
@@ -86,13 +101,12 @@ public class PatientAccountSrv {
         userAccount.setLastName(reqObj.getParameter("lastName"));
         String dateString = reqObj.getParameter("birthDate");
         try {
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-            Date date = formatter.parse(dateString);
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            LocalDate date = LocalDate.parse(dateString, formatter);
             userAccount.setBirthDate(date);
-        } catch (ParseException e) {
+        } catch (DateTimeParseException e) {
             e.printStackTrace();
         }
-
         userAccount.setSex(reqObj.getParameter("Sex"));
         userAccount.setPhoneNumber(reqObj.getParameter("phoneNumber"));
         String phoneNumber = reqObj.getParameter("phoneNumber");
@@ -118,7 +132,7 @@ public class PatientAccountSrv {
 
         userAccount.setUsername(userAccount.getEmailId());
         userAccount.setGdprConsent(reqObj.getParameter("gdprConsent"));
-        userAccount.setGdprConsentDate(new Date());
+        userAccount.setGdprConsentDate(LocalDateTime.now());
 
         //--- Password Encryption and assign to the password field
         String rawPassword = userAccount.getPassword();
@@ -177,15 +191,15 @@ public class PatientAccountSrv {
         userAccount.setLastName(reqObj.getParameter("lastName").toUpperCase());
         String dateString = reqObj.getParameter("birthDate");
         try {
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-            dateOfBirth = formatter.parse(dateString);
-            userAccount.setBirthDate(dateOfBirth);
-        } catch (ParseException e) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            LocalDate date = LocalDate.parse(dateString, formatter);
+            userAccount.setBirthDate(date);
+        } catch (DateTimeParseException e) {
             e.printStackTrace();
         }
 
         userAccount.setGdprConsent(reqObj.getParameter("gdprConsent"));
-        userAccount.setGdprConsentDate(new Date());
+        userAccount.setGdprConsentDate(LocalDateTime.now());
         userAccount.setSex(reqObj.getParameter("Sex"));
         userAccount.setPhoneNumber(reqObj.getParameter("phoneNumber"));
 
@@ -459,13 +473,14 @@ public class PatientAccountSrv {
         userAccount.setFirstName(reqObj.getParameter("firstName"));
         userAccount.setLastName(reqObj.getParameter("lastName"));
         String dateString = reqObj.getParameter("birthDate");
-        try {
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-            Date date = formatter.parse(dateString);
-            userAccount.setBirthDate(date);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate date = LocalDate.parse(dateString, formatter);
+        userAccount.setBirthDate(date);
+
+
+
 
         userAccount.setSex(reqObj.getParameter("Sex"));
         userAccount.setPhoneNumber(reqObj.getParameter("phoneNumber"));
@@ -486,7 +501,7 @@ public class PatientAccountSrv {
         userAccount.setUsername(userAccount.getEmailId());
 
         userAccount.setGdprConsent(reqObj.getParameter("gdprConsent"));
-        userAccount.setGdprConsentDate(new Date());
+        userAccount.setGdprConsentDate(LocalDateTime.now());
 
         //--- Password Encryption and assign to the password field
         String rawPassword = userAccount.getPassword();
@@ -554,7 +569,7 @@ public class PatientAccountSrv {
 
 
         userAccount.setGdprConsent(reqObj.getParameter("gdprConsent"));
-        userAccount.setGdprConsentDate(new Date());
+        userAccount.setGdprConsentDate(LocalDateTime.now());
 
         //--- Password Encryption and assign to the password field
         String rawPassword = userAccount.getPassword();
@@ -635,13 +650,9 @@ public class PatientAccountSrv {
         paitentAccountObj.setFirstName(firstName);
         paitentAccountObj.setLastName(lastName);
 
-        try {
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-            Date date = formatter.parse(birthDate);
-            paitentAccountObj.setBirthDate(date);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate date = LocalDate.parse(birthDate, formatter);
+        paitentAccountObj.setBirthDate(date);
 
         paitentAccountObj.setSex(Sex);
         paitentAccountObj.setPpsNumber(ppsNumber);
@@ -688,6 +699,15 @@ public class PatientAccountSrv {
         String firstName = patientData.get("firstName").toUpperCase().trim();
         String lastName = patientData.get("lastName").toUpperCase().trim();
         String birthDate = patientData.get("birthDate");
+
+        LocalDate dob = null;
+        try {
+            dob = LocalDate.parse(birthDate);
+        } catch (DateTimeParseException e) {
+            // return bad request / validation error
+        }
+
+
         String Sex = patientData.get("patientSex");
         String phoneNumber = patientData.get("phoneNumber").trim();
         String emailId = patientData.get("emailId").toUpperCase().trim();
@@ -695,8 +715,9 @@ public class PatientAccountSrv {
         String eirCode = patientData.get("eirCode").toUpperCase().trim();
         String subscriptionType = "NA";
 
-        java.sql.Date sqlDate = DateUtil.parseToSqlDate(birthDate);
-        List<PatientAccount> patientAccounts = paitentAccountDao.findPatientAccountsIgnoreCase(firstName, lastName, sqlDate, Sex);
+
+
+        List<PatientAccount> patientAccounts = paitentAccountDao.findPatientAccountsIgnoreCase(firstName, lastName, dob, Sex);
         if (patientAccounts != null) {
             if (patientAccounts.size() > 0) {
                 return "Patient already exist with same detail : " + firstName + " " + lastName + " , Dob : " + birthDate;
@@ -714,10 +735,12 @@ public class PatientAccountSrv {
         patientAccountObj.setLastName(lastName);
 
         try {
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-            Date date = formatter.parse(birthDate);
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            LocalDate date = LocalDate.parse(birthDate, formatter);
             patientAccountObj.setBirthDate(date);
-        } catch (ParseException e) {
+
+        } catch (DateTimeParseException e) {
             e.printStackTrace();
         }
 
@@ -766,18 +789,16 @@ public class PatientAccountSrv {
         // Date mapping: java.util.Date -> java.time.LocalDate
         if (account.getBirthDate() != null) {
             detail.setDateOfBirth(account.getBirthDate()
-                    .atZone(java.time.ZoneId.systemDefault()).toLocalDate());
+                    .atStartOfDay(java.time.ZoneId.systemDefault()).toLocalDate());
         }
 
         // createdAt, updatedAt: example mapping from createDate and lastLoginDate
         if (account.getCreateDate() != null) {
-            detail.setCreatedAt(account.getCreateDate().toInstant()
-                    .atZone(java.time.ZoneId.systemDefault()).toLocalDateTime());
+            detail.setCreatedAt(account.getCreateDate());
         }
 
         if (account.getLastLoginDate() != null) {
-            detail.setUpdatedAt(account.getLastLoginDate().toInstant()
-                    .atZone(java.time.ZoneId.systemDefault()).toLocalDateTime());
+            detail.setUpdatedAt(account.getLastLoginDate());
         }
 
 

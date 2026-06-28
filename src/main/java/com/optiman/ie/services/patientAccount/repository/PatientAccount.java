@@ -135,7 +135,7 @@ public class PatientAccount implements Serializable {
     @PrePersist
     protected void onCreate() {
         if (this.gdprConsentDate == null) this.gdprConsentDate = LocalDateTime.now();
-        if (this.createDate == null) this.createDate = now;
+        if (this.createDate == null) this.createDate = LocalDateTime.now();
         if (this.lastActionDate == null) this.lastActionDate = LocalDateTime.now();
         if (this.userIsActive == null) this.userIsActive = Boolean.TRUE;
         if (this.userLoginCount == null) this.userLoginCount = 0;

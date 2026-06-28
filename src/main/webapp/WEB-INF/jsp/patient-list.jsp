@@ -68,7 +68,7 @@
                          <c:forEach var="dataObject" items="${paitentList}">
                               <tr>
                                 <td> <a href="Javascript:void();" onclick="viewPatient('${dataObject.userId}');">   ${dataObject.firstName} ${dataObject.lastName} </a></td>
-                                <td> ${dataObject.getDateOfBirthFormatted()} , ${dataObject.sex} </td>
+                                <td> <a href="Javascript:void();" onclick="viewPatient('${dataObject.userId}');">   ${dataObject.getDateOfBirthFormatted()} , ${dataObject.sex} </a></td>
                                 <td>
                                    <a href="Javascript:void();" onclick="viewPatient('${dataObject.userId}');">
                                        <c:if test="${not empty dataObject.fullAddress}">

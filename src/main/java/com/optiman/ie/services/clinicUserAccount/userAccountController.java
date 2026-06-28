@@ -1,6 +1,7 @@
 package com.optiman.ie.services.clinicUserAccount;
 
 
+import com.optiman.ie.batchjob.DashBoardReport;
 import com.optiman.ie.services.clinicUserAccount.repository.ClinicUser;
 import com.optiman.ie.services.clinicUserAccount.srv.ClinicUserSrv;
 import com.optiman.ie.util.ModelViewUtil;
@@ -22,9 +23,12 @@ public class userAccountController extends ModelViewUtil {
 
     private ClinicUserSrv clinicUserSrv;
 
+    private DashBoardReport dashBoardReport;
 
-    public userAccountController(ClinicUserSrv clinicUserSrv) {
+
+    public userAccountController(ClinicUserSrv clinicUserSrv, DashBoardReport dashBoardReport) {
         this.clinicUserSrv = clinicUserSrv;
+        this.dashBoardReport = dashBoardReport;
     }
 
 
@@ -53,6 +57,7 @@ public class userAccountController extends ModelViewUtil {
 
                     viewPageName = "admin-home";
                     ModelAndView modelAndView = new ModelAndView(viewPageName);
+                    modelAndView.addObject("AdminDashBoard",dashBoardReport.getDashBoardReport());
                     return modelAndView;
 
                 } else {

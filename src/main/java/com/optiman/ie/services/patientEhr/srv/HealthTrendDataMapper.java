@@ -1,6 +1,6 @@
 package com.optiman.ie.services.patientEhr.srv;
 
-import com.gp4less.models.EHR.HealthTrendRecord;
+import com.optiman.ie.services.patientEhr.model.HealthTrendRecord;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 

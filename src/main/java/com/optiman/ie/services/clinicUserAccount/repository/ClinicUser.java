@@ -32,6 +32,9 @@ public class ClinicUser implements Serializable {
     @Column(name = "last_name", length = 100)
     private String lastName;
 
+    @Column(name = "room_number", length = 50)
+    private String roomNumber;
+
     @Column(name = "gsm_number", length = 20)
     private String gsmNumber;
 
@@ -114,21 +117,10 @@ public class ClinicUser implements Serializable {
         return this.firstName +" "+ this.lastName;
     }
 
-    public String getRoomNumber(){
-        if(this.userId.equalsIgnoreCase("SP-00035709")){
-            return "3";
-        } else if(this.userId.equalsIgnoreCase("LL-068556")){
-            return "5";
-        } else if (this.userId.equalsIgnoreCase("KC-013578")){
-            return "2";
-        }else if (this.userId.equalsIgnoreCase("JW-002986")) {
-            return "1";
-        } else if(this.userId.equalsIgnoreCase("AT-042931")){
-            return "4";
-        } else {
-            return "0";
-        }
+    public String getRoomNumber() {
+        return this.roomNumber;
     }
+
 
 
 

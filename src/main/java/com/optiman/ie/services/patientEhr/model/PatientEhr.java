@@ -8,6 +8,7 @@ import java.util.List;
 
 @Data
 @XmlRootElement(name = "PatientEhrRecord")
+@XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(propOrder = {
         "patientDetail",
         "medicalConditions",
@@ -16,16 +17,15 @@ import java.util.List;
         "vaccinationRecords",
         "healthTrendRecords",
         "consultationRecords",
-        "GpComment",
+        "gpComment",
         "medicalLogs"
 })
-@XmlAccessorType(XmlAccessType.FIELD)
 public class PatientEhr implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @XmlAttribute(name = "version")
-    private String version = "2";
+    private String version = "2.1";
 
     @XmlElement(name = "PatientDetail")
     private PatientDetail patientDetail;
@@ -54,12 +54,11 @@ public class PatientEhr implements Serializable {
     @XmlElement(name = "ConsultationRecord")
     private List<ConsultationRecord> consultationRecords;
 
-    @XmlElementWrapper(name = "GpComment")
+    @XmlElementWrapper(name = "GpComments")
     @XmlElement(name = "GpComment")
     private List<GpComment> gpComment;
 
     @XmlElementWrapper(name = "MedicalLogs")
     @XmlElement(name = "MedicalLog")
     private List<MedicalLogs> medicalLogs;
-
 }

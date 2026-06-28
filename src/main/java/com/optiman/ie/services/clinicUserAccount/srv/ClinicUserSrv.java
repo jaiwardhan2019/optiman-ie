@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 
 import java.text.ParseException;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -50,6 +51,9 @@ public class ClinicUserSrv {
 
         String lastName = data.get("lastName");
         newClinicUser.setLastName(lastName);
+
+        String roomNumber = data.get("roomNumber");
+        newClinicUser.setRoomNumber(roomNumber);
 
         //-- For creating new user id if not exist
         String userId = data.get("userId");
@@ -128,6 +132,9 @@ public class ClinicUserSrv {
         String phoneNumber = data.get("phoneNumber");
         newClinicUser.setPhoneNumber(phoneNumber);
 
+        String roomNumber = data.get("roomNumber");
+        newClinicUser.setRoomNumber(roomNumber);
+
 
         String password = data.get("password");
         if(!StringUtil.isNullOrEmpty(password)){
@@ -193,6 +200,26 @@ public class ClinicUserSrv {
     public ClinicUser findUserByEmailId(String emailId){
         return clinicUserDao.findByEmailId(emailId);
     }
+
+
+    public Optional<ClinicUser> findByUserId(String userId){
+       return clinicUserDao.findById(userId);
+    }
+
+    public void deleteClinicUser(String userId){
+        clinicUserDao.deleteById(userId);
+    }
+
+
+    public List<ClinicUser> findAllClinicUser(){
+        return clinicUserDao.findAll();
+    }
+
+    public  ClinicUser saveClinicUser(ClinicUser clinicUser){
+        return clinicUserDao.save(clinicUser);
+    }
+
+
 
 
 }

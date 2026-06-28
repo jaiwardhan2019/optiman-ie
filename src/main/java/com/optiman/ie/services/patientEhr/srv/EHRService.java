@@ -1,6 +1,8 @@
 package com.optiman.ie.services.patientEhr.srv;
+import com.optiman.ie.services.clinicUserAccount.repository.ClinicUser;
 import com.optiman.ie.services.patientAccount.repository.PatientAccount;
-import com.optiman.ie.services.patientEhr.model.PatientEhr;
+import com.optiman.ie.services.patientAccount.repository.PatientAccountDao;
+import com.optiman.ie.services.patientEhr.model.*;
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.Marshaller;
 import jakarta.xml.bind.Unmarshaller;
@@ -35,8 +37,9 @@ import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
-import static com.gp4less.constant.GlobalConst.EHR_RECORDS;
-import static com.gp4less.constant.GlobalCostData.DATA_FOLDER;
+import static com.optiman.ie.contant.GlobalConst.EHR_RECORDS;
+import static com.optiman.ie.contant.ProjectDataMapping.DATA_FOLDER;
+
 
 @Slf4j
 @Service
@@ -55,9 +58,11 @@ public class EHRService {
         try {
             JAXB_CONTEXT = JAXBContext.newInstance(PatientEhr.class);
         } catch (Exception e) {
+            e.printStackTrace(); // important: shows the 2 exact illegal annotations
             throw new RuntimeException("Failed to initialize JAXBContext", e);
         }
     }
+
 
     private final ConcurrentHashMap<String, Object> patientLocks = new ConcurrentHashMap<>();
     private PatientAccountDao paitentAccountDao;
@@ -314,9 +319,9 @@ public class EHRService {
         try {
             PatientEhr ehr = readXml(userId);
             if (ehr != null) {
-                List<PatientDetail.Allergy> allergies = ehr.getAllergy();
-                List<PatientDetail.Medication> medications = ehr.getPatientDetail().getRepeatMedication();
-                List<PatientDetail.MedicalCondition> medicalHistory = ehr.getMedicalCondition();
+                List<Allergy> allergies = ehr.getPatientDetail().getAllergies();
+                List<Medication> medications = ehr.getPatientDetail().getRepeatMedication();
+                List<MedicalCondition> medicalHistory = ehr.getPatientDetail().getMedicalConditions();
                 medicalInfo.put("allergies", allergies != null ? allergies : new ArrayList<>());
                 medicalInfo.put("medications", medications != null ? medications : new ArrayList<>());
                 medicalInfo.put("medicalHistory", medicalHistory != null ? medicalHistory : new ArrayList<>());
@@ -344,13 +349,13 @@ public class EHRService {
                 return summary.append("").toString();
             }
 
-            List<PatientDetail.Allergy> allergies = ehr.getPatientDetail().getAllergies();
-            List<PatientDetail.Medication> medications = ehr.getPatientDetail().getRepeatMedication();
-            List<PatientDetail.MedicalCondition> medicalHistory = ehr.getPatientDetail().getMedicalConditions();
+            List<Allergy> allergies = ehr.getPatientDetail().getAllergies();
+            List<Medication> medications = ehr.getPatientDetail().getRepeatMedication();
+            List<MedicalCondition> medicalHistory = ehr.getPatientDetail().getMedicalConditions();
 
             if (medicalHistory != null && !medicalHistory.isEmpty()) {
                 summary.append("\n Medical History \n");
-                for (PatientDetail.MedicalCondition condition : medicalHistory) {
+                for (MedicalCondition condition : medicalHistory) {
 
                     if(condition.getIsChronic()) {
                         summary.append(String.format("%-50s %-30s\n",
@@ -365,7 +370,7 @@ public class EHRService {
 
             if (allergies != null && !allergies.isEmpty()) {
                 summary.append("\nAllergies:\n");
-                for (PatientDetail.Allergy allergy : allergies) {
+                for (Allergy allergy : allergies) {
                     summary.append(String.format("%-50s %-30s\n", "- " + allergy.getAllergen(), "Severity : " + allergy.getSeverity()));
                 }
             } else {
@@ -375,7 +380,7 @@ public class EHRService {
 
             if (medications != null && !medications.isEmpty()) {
                 summary.append("\nRepeat Medications:\n");
-                for (PatientDetail.Medication medication : medications) {
+                for (Medication medication : medications) {
                     summary.append(String.format("%-50s %-30s\n", "- " + medication.getMedicationName(), " Dosage : " + medication.getDosage()));
                 }
             } else {
@@ -597,37 +602,34 @@ public class EHRService {
 
         // Date mapping: java.util.Date -> java.time.LocalDate
         if (account.getBirthDate() != null) {
-            detail.setDateOfBirth(account.getBirthDate().toInstant()
-                    .atZone(ZoneId.systemDefault()).toLocalDate());
+            detail.setDateOfBirth(account.getBirthDate());
         }
 
         // createdAt, updatedAt: example mapping from createDate and lastLoginDate
         if (account.getCreateDate() != null) {
-            detail.setCreatedAt(account.getCreateDate().toInstant()
-                    .atZone(ZoneId.systemDefault()).toLocalDateTime());
+            detail.setCreatedAt(account.getCreateDate());
         }
         if (account.getLastLoginDate() != null) {
-            detail.setUpdatedAt(account.getLastLoginDate().toInstant()
-                    .atZone(ZoneId.systemDefault()).toLocalDateTime());
+            detail.setUpdatedAt(account.getLastLoginDate());
         }
 
         detail.setUpdatedBy(account.getUserId()); // Or another field if needed
 
         // Address mapping
-        PatientDetail.Address address = new PatientDetail.Address();
+        Address address = new Address();
         address.setAddressDetail(account.getFullAddress());
         address.setEirCode(account.getEirCode());
         // You can split address/city/state if available in fullAddress, otherwise leave blank
         detail.setAddress(address);
 
         // ContactInfo mapping
-        PatientDetail.ContactInfo contactInfo = new PatientDetail.ContactInfo();
+        ContactInfo contactInfo = new ContactInfo();
         contactInfo.setPrimaryPhone(account.getPhoneNumber());
         contactInfo.setEmail(account.getEmailId());
         detail.setContactInfo(contactInfo);
 
         // Demographics mapping
-        PatientDetail.Demographics demographics = new PatientDetail.Demographics();
+        Demographics demographics = new Demographics();
         // You may want to set preferredLanguage, ethnicity, etc. if available in PatientAccount
         detail.setDemographics(demographics);
 
