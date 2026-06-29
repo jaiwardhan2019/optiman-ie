@@ -12,7 +12,7 @@
         <div class="pagetitle">
           <nav>
             <ol class="breadcrumb">
-              <li class="breadcrumb-item"><a href="admin-dashboard"> Dashboard  </a>  </li>
+              <li class="breadcrumb-item"><a href="admin-home"> Dashboard  </a>  </li>
               <li class="breadcrumb-item active">All Patient </li>
             </ol>
           </nav>

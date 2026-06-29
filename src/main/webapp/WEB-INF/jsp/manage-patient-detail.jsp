@@ -11,8 +11,8 @@
 
       <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="admin-dashboard"> Dashboard  </a>  </li>
-          <li class="breadcrumb-item"> <a href="patient-list"> Patient </a></li>
+          <li class="breadcrumb-item"><a href="admin-home"> Dashboard  </a>  </li>
+          <li class="breadcrumb-item"> <a href="patient-list"> Patient List </a></li>
           <li class="breadcrumb-item active"> Patient Profile</li>
           <li style="margin-left:500px">
              <span style="color: #00008B;"><a href="Javascript:void();" onClick="viewPatientProfile('<c:out value='${patientDetail.userId}'/>');"><i class="bi bi-arrow-repeat" style="font-size:1.3em;"> </i>  Refresh Screen </a></span>
@@ -142,6 +142,38 @@
 
                   <div class="row" style="margin-top:25px;">
 
+
+                       <div class="col-lg-3" align="left">
+                           <button type="button" onclick="openDocumentUploadModel();" class="btn btn-info">
+                                <i class="bi bi-database-add"></i> Add document
+                           </button>
+                       </div>
+
+                        <div class="col-lg-3" align="left">
+                                 <button type="button" onclick="openHl7DocumentUploadModel();" class="btn btn-info">
+                                      <i class="bi bi-filetype-xml"></i> Add Health Link XML
+                                 </button>
+                        </div>
+
+                       <div class="col-lg-3" align="left">
+                              <button type="button" class="btn" onClick="openSendMessageToPatient('<c:out value='${patientDetail.userId}'/>');" style="margin-right:10px; background-color: #07DBB8;">
+                                 <i class="bi bi-chat-left-dots" style="font-size:1.3em;"></i>  Message Patient
+                              </button>
+                       </div>
+
+                        <div class="col-lg-3" align="left">
+                            <button type="button" onClick="RetestReminder();" class="btn btn-warning">
+                              <i class="bi bi-alarm"></i> Setup Retest Reminder
+                            </button>
+                        </div>
+
+
+                  </div>
+
+
+
+                  <div class="row" style="margin-top:25px;">
+
                        <div class="col-lg-3" align="left">
                               <button type="button" class="btn" onClick="alertUnderConstruction();" style="margin-right:10px; background-color: #07DBB8;">
                                  <i class="bi bi-award" style="font-size:1.3em;"></i> Create Sick Note
@@ -152,14 +184,16 @@
                               <button type="button" class="btn" style="margin-right:10px; background-color: #FF637E; color:#fff;" onClick="alertUnderConstruction();"> <i class="bi bi-graph-up-arrow"></i> Trend Analysis </button>
                        </div>
 
-                        <div class="col-lg-3" align="left">
-                            <button type="button" onClick="RetestReminder();" class="btn btn-warning">
-                              <i class="bi bi-alarm"></i> Setup Retest Reminder
-                            </button>
-                        </div>
+                       <div class="col-lg-3" align="left">
+                              <button type="button" class="btn" onClick="alertUnderConstruction();" style="margin-right:10px; background-color: #07DBB8;">
+                                 <i class="bi bi-currency-euro" style="font-size:1.3em;"></i> Invoice / Receipt
+                              </button>
+                       </div>
+
+
 
                       <div class="col-lg-3" align="left">
-                          <button type="button" class="btn " onClick="openCreateDocumentPage('<c:out value='${patientIdEncrypted}'/>');" style="margin-right:10px; background-color: #D4D4D8; color:#black;">
+                          <button type="button" class="btn " onClick="alertUnderConstruction();" style="margin-right:10px; background-color: #D4D4D8; color:#black;">
                              <i class="bi bi-file-earmark-pdf" style="font-size:1.3em;color:#E6230E;"></i> Create Document
                           </button>
                       </div>
@@ -168,33 +202,6 @@
 
 
 
-                  <div class="row" style="margin-top:25px;">
-
-                    <div class="col-lg-3" align="left">
-                             <button type="button" onclick="openHl7DocumentUploadModel();" class="btn btn-info">
-                                  <i class="bi bi-filetype-xml"></i> Add Health Link XML
-                             </button>
-                   </div>
-
-                       <div class="col-lg-3" align="left">
-                           <button type="button" onclick="openDocumentUploadModel();" class="btn btn-info">
-                                <i class="bi bi-database-add"></i> Add document
-                           </button>
-                       </div>
-
-                       <div class="col-lg-3" align="left">
-                              <button type="button" class="btn" onClick="openInvoicePage('<c:out value='${patientDetail.userId}'/>');" style="margin-right:10px; background-color: #07DBB8;">
-                                 <i class="bi bi-currency-euro" style="font-size:1.3em;"></i> Invoice / Receipt
-                              </button>
-                       </div>
-
-                       <div class="col-lg-3" align="left">
-                              <button type="button" class="btn" onClick="openSendMessageToPatient('<c:out value='${patientDetail.userId}'/>');" style="margin-right:10px; background-color: #07DBB8;">
-                                 <i class="bi bi-chat-left-dots" style="font-size:1.3em;"></i>  Message Patient
-                              </button>
-                       </div>
-
-                  </div>
 
 
 
@@ -436,7 +443,7 @@
         <div class="modal-dialog modal-dialog-centered" style="max-width:800px;max-height:800px;">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title"><strong><i class="bi bi-database-add" style="font-size:1.2em;color: #FF1493;"> </i> Add document to patient EHR Log</strong></h5>
+              <h5 class="modal-title"><strong><i class="bi bi-database-add" style="font-size:1.2em;color: #FF1493;"> </i> Add document to patient profile </strong></h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
@@ -505,7 +512,7 @@
         <div class="modal-dialog modal-dialog-centered" style="max-width:800px;max-height:800px;">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title"><strong><i class="bi bi-database-add" style="font-size:1.2em;color: #FF1493;"> </i> Add Health link XML to patient EHR Log</strong></h5>
+              <h5 class="modal-title"><strong><i class="bi bi-database-add" style="font-size:1.2em;color: #FF1493;"> </i> Add Health link XML to patient profile </strong></h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
@@ -1410,11 +1417,7 @@
         }
       }
 
-
-
     </style>
-
-
 
     </jsp:attribute>
 </t:admin_layout>
