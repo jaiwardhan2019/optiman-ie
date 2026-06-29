@@ -34,8 +34,8 @@
                     <div class="card-body">
 
                             <div class="d-flex justify-content-between align-items-center">
-                                <h5 class="card-title mb-0"><i class="bi bi-file-earmark-richtext" style="font-size:1.4em;color: #FF1493;"> </i> Templates Heading List </h5>
-                                <button type="button" class="btn btn-info" onclick="addNewItem();"><i class="bi bi-plus-circle" style="font-size:1.2em;"></i> Add New   </button>
+                                <h5 class="card-title mb-0"><i class="bi bi-file-earmark-richtext" style="font-size:1.4em;color: #FF1493;"> </i> Template Category List </h5>
+                                <button type="button" class="btn btn-info" onclick="addNewItem();"><i class="bi bi-plus-circle" style="font-size:1.2em;"></i> Add New Category   </button>
                             </div>
                             <!-- Rest of your content (table, etc.) -->
 
@@ -43,7 +43,7 @@
                           <table class="table table-borderless datatable">
                             <thead>
                               <tr>
-                                <th scope="col"> Templates Category Name </th>
+                                <th scope="col"> Template Category Name </th>
                                 <th scope="col"> Added by  </th>
                                 <th scope="col"> Added Date </th>
                                 <th scope="col"> Update </th>
@@ -109,17 +109,17 @@
                         });
 
                         // Redirect to the delete action
-                        window.location.href = "manage_templates?delTemplateId=" + itemId;
+                        window.location.href = "manage_templates_header?delTemplateId=" + itemId;
                     }
                 });
             }
 
             function updateThisItem(itemId) {
-               window.location.href = "manage_templates?updateTemplateId=" + itemId;
+               window.location.href = "manage_templates_header?updateTemplateId=" + itemId;
             }
 
             function addNewItem() {
-               window.location.href = "manage_templates?addTemplateId=YES";
+               window.location.href = "manage_templates_header?addTemplateId=YES";
             }
 
       </script>

@@ -20,10 +20,7 @@ public class TemplateData {
     @Column(name = "data_category", length = 100)
     private String dataCategory;
 
-    @Column(name = "heading_name", length = 100)
-    private String headingName;
-
-    @Column(name = "content_detail", columnDefinition = "TEXT")
+   @Column(name = "content_detail", columnDefinition = "TEXT")
     private String contentDetail;
 
     @Column(name = "create_by", length = 50)
@@ -35,6 +32,10 @@ public class TemplateData {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "temp_header_id",referencedColumnName = "temp_header_id",nullable = false)
     private TemplateHeader templateHeader;
+
+    @Column(name = "heading_name", length = 100)
+    private String headingName;
+
 
     @Transient
     public String getCreatedDate() {

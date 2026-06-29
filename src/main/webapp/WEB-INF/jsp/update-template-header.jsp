@@ -103,7 +103,7 @@
                     });
 
                     // Redirect to the delete action
-                    window.location.href = "manage_templates?delTemplateId=" + itemId;
+                    window.location.href = "manage_templates_header?delTemplateId=" + itemId;
                 }
             });
 
@@ -194,16 +194,16 @@
 
             // This function will be called after user clicks "OK" on the last modal
             function afterOkFunction() {
-                    window.location.href = '${pageContext.request.contextPath}/manage_templates';
+                    window.location.href = '${pageContext.request.contextPath}/manage_templates_header';
             }
 
 
             function updateThisItem(itemId) {
-               window.location.href = "manage_templates?updateTemplateId=" + itemId;
+               window.location.href = "manage_templates_header?updateTemplateId=" + itemId;
             }
 
             function backToList() {
-                 window.location.href = '${pageContext.request.contextPath}/manage_templates';
+                 window.location.href = '${pageContext.request.contextPath}/manage_templates_header';
             }
 
 
@@ -213,11 +213,11 @@
 
 
             function addNewLabResultAdvise() {
-               window.location.href = "${pageContext.request.contextPath}/manage_templates?addTemplateId=YES";
+               window.location.href = "${pageContext.request.contextPath}/manage_templates_header?addTemplateId=YES";
             }
 
             function addNewItem() {
-               window.location.href = "${pageContext.request.contextPath}/manage_templates?addTemplateId=YES";
+               window.location.href = "${pageContext.request.contextPath}/manage_templates_header?addTemplateId=YES";
             }
 
 

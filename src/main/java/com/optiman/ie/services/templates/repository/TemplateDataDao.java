@@ -21,13 +21,10 @@ public interface TemplateDataDao extends JpaRepository<TemplateData, Long> {
 
         // Search within a category
         @Query("""
-            SELECT d
-            FROM TemplateData d
-            WHERE
+            SELECT d FROM TemplateData d  WHERE
                 (LOWER(d.headingName) LIKE LOWER(CONCAT('%', :headingName, '%'))
                  OR LOWER(d.contentDetail) LIKE LOWER(CONCAT('%', :headingName, '%')))
-            AND LOWER(d.dataCategory) = LOWER(:dataCategory)
-            ORDER BY d.createDate DESC
+            AND LOWER(d.dataCategory) = LOWER(:dataCategory)  ORDER BY d.createDate DESC
             """)
         List<TemplateData> findCaseSensitiveByHeadingNameContainingAndDataCategoryOrderByCreateDateDesc(
                 @Param("headingName") String headingName,

@@ -251,12 +251,12 @@
         <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
 
           <li>
-            <a  href="Javascript:void()" onClick="openAdminUrl('manage_templates')">
-              <i class="bi bi-file-easel"style="font-size:1.2em;"></i><span> Template Heading </span>
+            <a  href="Javascript:void()" onClick="openAdminUrl('manage_templates_header')">
+              <i class="bi bi-file-easel"style="font-size:1.2em;"></i><span> Template Category </span>
             </a>
           </li>
           <li>
-            <a  href="Javascript:void()" onClick="openAdminUrl('manage_data_templates')">
+            <a  href="Javascript:void()" onClick="openAdminUrl('manage_template_data')">
               <i class="bi bi-file-easel" style="font-size:1.2em;"></i><span> Template Data </span>
             </a>
           </li>

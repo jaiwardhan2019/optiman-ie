@@ -15,16 +15,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 /*
@@ -50,8 +49,8 @@ public class SetupDataTempletController extends ModelViewUtil {
 
 
 
-    //-- This end point will manage the Data Template Heading  Add . Remove and Update
-    @RequestMapping(value = "manage_templates", method = {RequestMethod.POST, RequestMethod.GET})
+    //-- This end point will manage the Data Template Category  Add . Remove and Update
+    @RequestMapping(value = "manage_templates_header", method = {RequestMethod.POST, RequestMethod.GET})
     public ModelAndView ManageTemplates(HttpServletRequest request,
                                         @RequestParam(value = "updateTemplateId", required = false) String updateTemplateId,
                                         @RequestParam(value = "addTemplateId", required = false) String addTemplateId,
@@ -136,6 +135,7 @@ public class SetupDataTempletController extends ModelViewUtil {
             log.info("New template with Header : {} is created  by : {}", templateHeader, adminUser.getFirstName() + " " + adminUser.getLastName() + " @ " + new Date());
 
         } else {
+
             // Update existing template
             TemplateHeader dataTemplates = this.templateHeaderDao.getReferenceById(Long.parseLong(templateId));
             if (dataTemplates != null) {
@@ -155,7 +155,8 @@ public class SetupDataTempletController extends ModelViewUtil {
                     return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
                 }
 
-            } else{
+            } else {
+
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Unable to find in the system !!");
             }
         }
@@ -169,6 +170,119 @@ public class SetupDataTempletController extends ModelViewUtil {
 
         return ResponseEntity.ok(sending_status);
     }
+
+
+
+
+
+    @RequestMapping(value = "manage_template_data", method = {RequestMethod.POST, RequestMethod.GET})
+    public ModelAndView ManageDataTemplates(HttpServletRequest request,
+                                            @RequestParam(value = "updateTemplateId", required = false) String updateTemplateId,
+                                            @RequestParam(value = "addTemplateId", required = false) String addTemplateId,
+                                            @RequestParam(value = "delTemplateId", required = false) String delTemplateId) {
+
+        if (request.getSession().getAttribute("ADMIN_SESSION") == null) {
+            return renderViewPage("admin-login");
+        }
+        ClinicUser adminUser = (ClinicUser) request.getSession().getAttribute("ADMIN_SESSION");
+
+        // For remove template
+        if (!StringUtil.isNullOrEmpty(delTemplateId)) {
+
+            Optional<TemplateData> dataTemplates = templateDataDao.findById(Long.parseLong(delTemplateId));
+            templateDataDao.deleteById(Long.parseLong(delTemplateId));
+            log.info("Data template with ID: {} is removed by : {}", delTemplateId, adminUser.getFirstName() + " " + adminUser.getLastName() + " @ " + new Date());
+
+            ModelAndView modelView = new ModelAndView("template-data-list");
+            modelView.addObject("templateType", dataTemplates.get().getDataCategory());
+            modelView.addObject("templatesSnippet", dataTemplateCategory.templatesList);
+            modelView.addObject("templateList", templateDataDao.findByDataCategoryOrderByHeadingNameAsc(dataTemplates.get().getDataCategory()));
+            return modelView;
+        }
+
+
+        // For rendering Update template
+        if (!StringUtil.isNullOrEmpty(updateTemplateId)) {
+            //-- Render the update template page with the existing template data
+            ModelAndView modelView = new ModelAndView("update-data-template");
+            modelView.addObject("templatesSnippet", dataTemplateCategory.templatesList);
+            modelView.addObject("dataTemplate", templateDataDao.findById(Long.parseLong(updateTemplateId)).orElse(null));
+            return modelView;
+        }
+
+        // For Add new template
+        if (!StringUtil.isNullOrEmpty(addTemplateId)) {
+            //-- Render the update template page with the existing template data
+            TemplateData dataTemplates = new TemplateData();
+            dataTemplates.setDataCategory("");
+            ModelAndView modelView = new ModelAndView("update-data-template");
+            modelView.addObject("templatesSnippet", dataTemplateCategory.templatesList);
+            modelView.addObject("dataTemplate", dataTemplates);
+            return modelView;
+        }
+
+        ModelAndView modelView = new ModelAndView("template-data-list");
+        modelView.addObject("templatesSnippet", dataTemplateCategory.templatesList);
+        modelView.addObject("templateList", templateDataDao.findByOrderByCreateDateDesc());
+        return modelView;
+    }
+
+
+
+    @PostMapping("update-data-template")
+    public ResponseEntity<String> updateTemplate(HttpServletRequest reqObj,@RequestBody Map<String, String> requestData) throws IOException, JAXBException {
+        // Get user detail from session
+        ClinicUser adminUser = (ClinicUser) reqObj.getSession().getAttribute("ADMIN_SESSION");
+        if (adminUser == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized access.");
+        }
+
+        String templateId = requestData.get("templateId");
+        String dataCategory = requestData.get("dataCategory");
+        String templateHeader = requestData.get("templateHeader");
+        String templateContent = requestData.get("templateContent");
+        String sending_status = "";
+
+
+        //----- ADD NEW TEMPLATE DATA
+        if (templateId == null || templateId.isEmpty()) {
+
+            TemplateHeader header = templateHeaderDao.findById(Long.valueOf(dataCategory))
+                    .orElseThrow(() -> new IllegalArgumentException("Invalid tempHeaderId: " + templateId));
+
+            TemplateData entity = new TemplateData();
+            entity.setTemplateHeader(header);                          // mandatory relation
+            entity.setDataCategory(dataCategory);             // or header.getHeadingName()
+            entity.setHeadingName(templateHeader);     // String field
+            entity.setContentDetail(templateContent);
+            entity.setCreateDate(LocalDate.now());
+            entity.setCreateBy(adminUser.getFullName());
+            TemplateData saved = templateDataDao.save(entity);
+            sending_status = "Template is created successfully !!";
+
+            log.info("New template with Header: {} created by: {} {} @ {}",saved.getHeadingName(),adminUser.getFirstName(),
+            adminUser.getLastName(), new Date());
+
+        } else {
+            // UPDATE EXISTING DATA
+            TemplateData dataTemplates = templateDataDao.getReferenceById(Long.parseLong(templateId));
+            dataTemplates.setId(Long.parseLong(templateId));
+            dataTemplates.setDataCategory(dataCategory);
+            dataTemplates.setHeadingName(templateHeader);
+            dataTemplates.setContentDetail(templateContent);
+            templateDataDao.save(dataTemplates);
+            sending_status = "Updated successfully !!";
+            log.info("Template with ID: {} is updated by : {}", templateId, adminUser.getFirstName() + " " + adminUser.getLastName() + " @ " + new Date());
+        }
+
+        if (sending_status == null || sending_status.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to update template.");
+        }
+
+        return ResponseEntity.ok(sending_status);
+    }
+
+
 
 
 

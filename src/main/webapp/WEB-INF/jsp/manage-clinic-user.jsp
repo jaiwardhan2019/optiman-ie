@@ -254,17 +254,17 @@
                         });
 
                         // Redirect to the delete action
-                        window.location.href = "manage_templates?delTemplateId=" + itemId;
+                        window.location.href = "manage_templates_header?delTemplateId=" + itemId;
                     }
                 });
             }
 
             function updateThisItem(itemId) {
-               window.location.href = "manage_templates?updateTemplateId=" + itemId;
+               window.location.href = "manage_templates_header?updateTemplateId=" + itemId;
             }
 
             function addNewItem() {
-               window.location.href = "manage_templates?addTemplateId=YES";
+               window.location.href = "manage_templates_header?addTemplateId=YES";
             }
 
 
