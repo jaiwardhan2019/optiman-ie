@@ -29,7 +29,7 @@ public class TemplateData {
     @Column(name = "create_date")
     private LocalDate createDate;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "temp_header_id",referencedColumnName = "temp_header_id",nullable = false)
     private TemplateHeader templateHeader;
 
