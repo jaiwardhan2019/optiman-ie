@@ -46,7 +46,10 @@
                                     <select   class="form-select form-select" id="tempId" name="tempId" onChange="addMessageToCommentBox()">
                                           <option value="" selected>----------- All Template Category  ----------- </option>
                                           <c:forEach var="entry" items="${templatesSnippet}">
-                                               <option value="${entry.tempHeaderId}" <c:if test="${entry.tempHeaderId == dataTemplate.tempHeaderId}"> selected </c:if> >       ${entry.headingName}     </option>
+                                                <option value="${entry.tempHeaderId}"
+                                                  ${entry.tempHeaderId eq dataTemplate.tempHeaderId ? 'selected="selected"' : ''}>
+                                                  ${entry.headingName}
+                                                </option>
                                           </c:forEach>
                                      </select>
                               </div>

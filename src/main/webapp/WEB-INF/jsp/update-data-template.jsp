@@ -50,8 +50,12 @@
                                         <select class="form-select form-select" id="dataCategory" name="dataCategory" onChange="addMessageToCommentBox()">
                                             <option value="">----- Select Template -----</option>
                                             <c:forEach var="entry" items="${templatesSnippet}">
-                                                <option value="${entry.tempHeaderId}" <c:if test="${entry.headingName == dataTemplate.dataCategory}">selected</c:if>>${entry.headingName}</option>
+                                                <option value="${entry.tempHeaderId}" <c:if test="${entry.tempHeaderId eq dataTemplate.templateHeader.tempHeaderId}">selected</c:if>>
+                                                  ${entry.headingName}
+                                                 </option>
+
                                             </c:forEach>
+
                                         </select>
                                     </div>
                                     <div class="col-lg-4 col-md-4 label" style="text-align:left;">
@@ -261,8 +265,10 @@ const templateContent =
             }
 
             function addNewItem() {
-               window.location.href = "${pageContext.request.contextPath}/manage_data_templates?addTemplateId=YES";
+               window.location.href = "manage_template_data?addTemplateId=YES";
             }
+
+
 
       </script>
 

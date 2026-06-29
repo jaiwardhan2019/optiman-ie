@@ -266,7 +266,14 @@ public class SetupDataTempletController extends ModelViewUtil {
         } else {
             // UPDATE EXISTING DATA
             TemplateData dataTemplates = templateDataDao.getReferenceById(Long.parseLong(templateId));
+
             dataTemplates.setId(Long.parseLong(templateId));
+
+            TemplateHeader header = templateHeaderDao.findById(Long.valueOf(dataCategory))
+                    .orElseThrow(() -> new IllegalArgumentException("Invalid tempHeaderId: " + templateId));
+
+            dataTemplates.setTemplateHeader(header);                          // mandatory relation
+
             dataTemplates.setDataCategory(dataCategory);
             dataTemplates.setHeadingName(templateHeader);
             dataTemplates.setContentDetail(templateContent);
