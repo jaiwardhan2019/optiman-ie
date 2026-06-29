@@ -12,8 +12,8 @@
         <div class="pagetitle">
           <nav>
             <ol class="breadcrumb">
-              <li class="breadcrumb-item">Admin  </li>
-              <li class="breadcrumb-item active">Account List  </li>
+              <li class="breadcrumb-item">Setup Data Template </li>
+              <li class="breadcrumb-item active">Setup Template </li>
             </ol>
           </nav>
         </div><!-- End Page Title -->
@@ -34,43 +34,42 @@
                     <div class="card-body">
 
                             <div class="d-flex justify-content-between align-items-center">
-                                <h5 class="card-title mb-0"> <i class="bi bi-people" style="font-size:1.4em;color: #FF1493;"> </i> Clinic Staff list </h5>
+                                <h5 class="card-title mb-0"><i class="bi bi-file-earmark-richtext" style="font-size:1.4em;color: #FF1493;"> </i> Templates Heading List </h5>
                                 <button type="button" class="btn btn-info" onclick="addNewItem();"><i class="bi bi-plus-circle" style="font-size:1.2em;"></i> Add New   </button>
                             </div>
+                            <!-- Rest of your content (table, etc.) -->
 
                         <br>
                           <table class="table table-borderless datatable">
                             <thead>
                               <tr>
-                                <th scope="col"> Name  </th>
-                                <th scope="col"> Role   </th>
-                                <th scope="col"> Email   </th>
-                                <th scope="col"> Phone  </th>
+                                <th scope="col"> Templates Category Name </th>
+                                <th scope="col"> Added by  </th>
+                                <th scope="col"> Added Date </th>
                                 <th scope="col"> Update </th>
                                 <th scope="col"> Remove </th>
                               </tr>
                             </thead>
                             <tbody>
-                                 <c:forEach var="dataObject" items="${clinicUserList}">
-                                      <tr>
-                                        <td align="left">${dataObject.firstName}  ${dataObject.lastName}</td>
-                                        <td> ${dataObject.accountType} </td>
-                                        <td> ${dataObject.emailId} </td>
-                                        <td> ${dataObject.phoneNumber}</td>
-                                        <td>
-                                            <a href="Javascript:void();" onClick="updateThisItem('${dataObject.userId}');">
-                                                <i class="bi bi-pencil-square" style="color:blue"></i>
-                                                <span style="color:blue"> Update </span>
-                                            </a>
-                                        </td>
-                                        <td>
-                                            <a href="Javascript:void();" onClick="removeThisItem('${dataObject.userId}');">
-                                                <i class="bi bi-trash3" style="color:red"></i>
-                                                <span style="color:red"> Delete </span>
-                                            </a>
-                                        </td>
-                                      </tr>
-                                 </c:forEach>
+                             <c:forEach var="dataObject" items="${templateList}" begin="0" end="10000">
+                                  <tr>
+                                    <td align="left">${dataObject.headingName} </td>
+                                    <td> ${dataObject.createBy} </td>
+                                    <td> ${dataObject.getCreatedDate()}</td>
+                                    <td>
+                                        <a href="Javascript:void();" onClick="updateThisItem('${dataObject.tempHeaderId}');">
+                                            <i class="bi bi-pencil-square" style="color:blue"></i>
+                                            <span style="color:blue"> Update </span>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="Javascript:void();" onClick="removeThisItem('${dataObject.tempHeaderId}');">
+                                            <i class="bi bi-trash3" style="color:red"></i>
+                                            <span style="color:red"> Delete </span>
+                                        </a>
+                                    </td>
+                                  </tr>
+                             </c:forEach>
                             </tbody>
                           </table>
                     </div> <!-- End of card body  -->
@@ -90,7 +89,7 @@
             function removeThisItem(itemId) {
                 Swal.fire({
                     title: 'Are you sure?',
-                    text: "You are about to delete this !? ",
+                    text: "You are about to delete this data template !? ",
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
@@ -102,7 +101,7 @@
                     if (result.isConfirmed) {
                         Swal.fire({
                             title: 'Deleting...',
-                            html: 'Please wait while we remove .',
+                            html: 'Please wait while we remove the document.',
                             allowOutsideClick: false,
                             didOpen: () => {
                                 Swal.showLoading();
@@ -110,17 +109,17 @@
                         });
 
                         // Redirect to the delete action
-                        window.location.href = "manage-clinic-user?delUserId="+itemId;
+                        window.location.href = "manage_templates?delTemplateId=" + itemId;
                     }
                 });
             }
 
             function updateThisItem(itemId) {
-               window.location.href = "manage-clinic-user?updateUserId=" + itemId;
+               window.location.href = "manage_templates?updateTemplateId=" + itemId;
             }
 
             function addNewItem() {
-               window.location.href = "manage-clinic-user";
+               window.location.href = "manage_templates?addTemplateId=YES";
             }
 
       </script>
@@ -131,3 +130,5 @@
 
     </jsp:attribute>
 </t:admin_layout>
+
+
