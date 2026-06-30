@@ -228,20 +228,14 @@
            <span> Patient Documents </span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="patients-document-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+
           <li>
             <a  href="Javascript:void()" onClick="openAdminUrl('manage-clinic-documents')">
-              <i class="bi bi-card-list" style="font-size:1.3em;" ></i><span> Documents List </span>
-            </a>
-          </li>
-          <li>
-            <a  href="Javascript:void()" onClick="openAdminUrl('create-new-patient')">
               <i class="bi bi-file-earmark-diff" style="font-size:1.3em;" ></i><span> Manage Documents  </span>
             </a>
           </li>
         </ul>
       </li><!-- End Patient Nav -->
-
-
 
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
