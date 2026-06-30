@@ -14,7 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.io.IOException;
 import java.text.ParseException;
 
-import static com.optiman.ie.contant.GlobalConst.*;
+import static com.optiman.ie.constant.GlobalConst.*;
 
 
 @Slf4j

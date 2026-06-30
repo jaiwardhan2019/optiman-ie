@@ -1,4 +1,4 @@
-package com.optiman.ie.contant;
+package com.optiman.ie.constant;
 
 import java.util.Map;
 import java.util.TreeMap;

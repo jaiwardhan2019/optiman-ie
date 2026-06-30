@@ -1,4 +1,4 @@
-package com.optiman.ie.repository;
+package com.optiman.ie.services.clinic_document.repository;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -18,7 +18,7 @@ public interface ClinicDocumentMasterDao extends JpaRepository<ClinicDocumentMas
     long countAll();
     ClinicDocumentMaster findByDocumentId(String documentId);
 
-    List<ClinicDocumentMaster> findTop5000ByOrderByCreateDateDesc();
+    List<ClinicDocumentMaster> findTop15000ByOrderByCreateDateDesc();
 
 
     @Query(value = """

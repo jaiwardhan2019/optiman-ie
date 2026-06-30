@@ -1,4 +1,4 @@
-package com.optiman.ie.repository;
+package com.optiman.ie.services.clinic_document.repository;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -18,7 +18,9 @@ import java.time.format.DateTimeParseException;
         },
         uniqueConstraints = {@UniqueConstraint(columnNames = {"DOCUMENTID"})})
 public class ClinicDocumentMaster implements Serializable {
+
     private static final long serialVersionUID = 1L;
+
     private static final String[] patterns = {
             "yyyy-MM-dd",
             "dd/MM/yyyy",

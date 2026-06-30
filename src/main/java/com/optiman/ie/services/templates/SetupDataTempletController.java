@@ -1,7 +1,7 @@
 package com.optiman.ie.services.templates;
 
 import ch.qos.logback.core.util.StringUtil;
-import com.optiman.ie.contant.DataTemplateCategory;
+import com.optiman.ie.constant.DataTemplateCategory;
 import com.optiman.ie.services.clinicUserAccount.repository.ClinicUser;
 import com.optiman.ie.services.templates.repository.TemplateData;
 import com.optiman.ie.services.templates.repository.TemplateDataDao;
@@ -15,11 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -46,7 +44,6 @@ public class SetupDataTempletController extends ModelViewUtil {
 
     @Autowired
     DataTemplateCategory dataTemplateCategory;
-
 
 
     //-- This end point will manage the Data Template Category  Add . Remove and Update
@@ -181,10 +178,14 @@ public class SetupDataTempletController extends ModelViewUtil {
                                             @RequestParam(value = "addTemplateId", required = false) String addTemplateId,
                                             @RequestParam(value = "delTemplateId", required = false) String delTemplateId) {
 
-        if (request.getSession().getAttribute("ADMIN_SESSION") == null) {
-            return renderViewPage("admin-login");
+        ModelAndView mv = securityCheckforAdmin(request);
+        if (mv != null) {
+            return mv; // 🔥 STOP execution and go to login page
         }
+
         ClinicUser adminUser = (ClinicUser) request.getSession().getAttribute("ADMIN_SESSION");
+
+        //long start = System.currentTimeMillis();
 
         // For remove template
         if (!StringUtil.isNullOrEmpty(delTemplateId)) {
@@ -204,7 +205,7 @@ public class SetupDataTempletController extends ModelViewUtil {
         // For rendering Update template
         if (!StringUtil.isNullOrEmpty(updateTemplateId)) {
             //-- Render the update template page with the existing template data
-            ModelAndView modelView = new ModelAndView("update-data-template");
+            ModelAndView modelView = new ModelAndView("update-template-data");
             modelView.addObject("templatesSnippet", dataTemplateCategory.templatesList);
             modelView.addObject("dataTemplate", templateDataDao.findById(Long.parseLong(updateTemplateId)).orElse(null));
             return modelView;
@@ -215,7 +216,7 @@ public class SetupDataTempletController extends ModelViewUtil {
             //-- Render the update template page with the existing template data
             TemplateData dataTemplates = new TemplateData();
             dataTemplates.setDataCategory("");
-            ModelAndView modelView = new ModelAndView("update-data-template");
+            ModelAndView modelView = new ModelAndView("update-template-data");
             modelView.addObject("templatesSnippet", dataTemplateCategory.templatesList);
             modelView.addObject("dataTemplate", dataTemplates);
             return modelView;
@@ -224,12 +225,13 @@ public class SetupDataTempletController extends ModelViewUtil {
         ModelAndView modelView = new ModelAndView("template-data-list");
         modelView.addObject("templatesSnippet", dataTemplateCategory.templatesList);
         modelView.addObject("templateList", templateDataDao.findByOrderByCreateDateDesc());
+        //log.info("manage_template_data(list) took {} ms", System.currentTimeMillis() - start);
         return modelView;
     }
 
 
 
-    @PostMapping("update-data-template")
+    @PostMapping("update-template-data-backend")
     public ResponseEntity<String> updateTemplate(HttpServletRequest reqObj,@RequestBody Map<String, String> requestData) throws IOException, JAXBException {
         // Get user detail from session
         ClinicUser adminUser = (ClinicUser) reqObj.getSession().getAttribute("ADMIN_SESSION");
@@ -322,7 +324,7 @@ public class SetupDataTempletController extends ModelViewUtil {
             //log.info("All templates viewed by : {}", adminUser.getFirstName() + " " + adminUser.getLastName() + " @ " + new Date());
         }
 
-        ModelAndView modelView = new ModelAndView("admin/data-template-list");
+        ModelAndView modelView = new ModelAndView("template-data-list");
         modelView.addObject("templateType", templateType);
         modelView.addObject("templatesSnippet", dataTemplateCategory.templatesList);
         modelView.addObject("templateList", templateDataList);

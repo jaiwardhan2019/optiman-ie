@@ -4,8 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.optiman.ie.repository.AdminDashBoard;
 import com.optiman.ie.repository.AdminDashBoardDao;
-import com.optiman.ie.repository.ClinicDocumentMasterDao;
 import com.optiman.ie.repository.TaskMasterDao;
+import com.optiman.ie.services.clinic_document.repository.ClinicDocumentMasterDao;
 import com.optiman.ie.services.patientAccount.repository.PatientAccountDao;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;

@@ -205,7 +205,7 @@ const templateContent =
                     });
 
                     // Simulate fetch, replace with your real API endpoint
-                    fetch('update-data-template', {
+                    fetch('update-template-data-backend', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(data)
@@ -241,6 +241,7 @@ const templateContent =
 
             // This function will be called after user clicks "OK" on the last modal
             function afterOkFunction() {
+                    loading();
                     window.location.href = '${pageContext.request.contextPath}/manage_template_data';
             }
 

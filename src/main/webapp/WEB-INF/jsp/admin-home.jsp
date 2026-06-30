@@ -50,7 +50,7 @@
 
                     <!-- Clinic Documents Card -->
                     <div class="col-xxl-3 col-md-6">
-                        <a href="Javascript:void();" onClick="openAdminUrl('manage-patient-documents');">
+                        <a href="Javascript:void();" onClick="openAdminUrl('manage-clinic-documents');">
                           <div class="card info-card sales-card">
                             <div class="card-body">
                               <h5 class="card-title">Patient Documents </span></h5>

@@ -28,7 +28,6 @@ import java.nio.file.StandardOpenOption;
 import java.security.SecureRandom;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,8 +36,8 @@ import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
-import static com.optiman.ie.contant.GlobalConst.EHR_RECORDS;
-import static com.optiman.ie.contant.ProjectDataMapping.DATA_FOLDER;
+import static com.optiman.ie.constant.GlobalConst.EHR_RECORDS;
+import static com.optiman.ie.constant.ProjectDataMapping.DATA_FOLDER;
 
 
 @Slf4j

@@ -229,7 +229,7 @@
         </a>
         <ul id="patients-document-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
-            <a  href="Javascript:void()" onClick="openAdminUrl('manage-patient-documents')">
+            <a  href="Javascript:void()" onClick="openAdminUrl('manage-clinic-documents')">
               <i class="bi bi-card-list" style="font-size:1.3em;" ></i><span> Documents List </span>
             </a>
           </li>

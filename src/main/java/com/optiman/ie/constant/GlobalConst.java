@@ -1,8 +1,8 @@
-package com.optiman.ie.contant;
+package com.optiman.ie.constant;
 
 import java.io.File;
 
-import static com.optiman.ie.contant.ProjectDataMapping.DATA_FOLDER;
+import static com.optiman.ie.constant.ProjectDataMapping.DATA_FOLDER;
 
 public class GlobalConst {
 
@@ -39,6 +39,8 @@ public class GlobalConst {
     public static String PRESCRIPTION_ATTACHMENT = "prescription_attachments";
     public static String MEDICAL_CERT = "medical_cert";
     public static String PRESCRIPTION = "prescription";
+    public static String CLINIC_DOCUMENTS = "clinic_documents";
+    public static String CLINIC_DOCUMENTS_PATH = DATA_FOLDER + File.separator + CLINIC_DOCUMENTS;
     public static String PATIENT_DOCUMENTS = "patient_documents";
     public static String PT_DOC_PDF = "pdf_file";
     public static String PT_INV_PDF = "invoice-receipt";

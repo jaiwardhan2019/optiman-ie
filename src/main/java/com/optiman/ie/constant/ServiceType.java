@@ -1,4 +1,4 @@
-package com.optiman.ie.contant;
+package com.optiman.ie.constant;
 
 public enum ServiceType {
 

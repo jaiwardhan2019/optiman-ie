@@ -9,8 +9,8 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.List;
 import java.util.Map;
 
-import static com.optiman.ie.contant.GlobalConst.ADMIN_SESSION;
-import static com.optiman.ie.contant.GlobalConst.USER_VALIDATED;
+import static com.optiman.ie.constant.GlobalConst.ADMIN_SESSION;
+import static com.optiman.ie.constant.GlobalConst.USER_VALIDATED;
 
 
 @Slf4j

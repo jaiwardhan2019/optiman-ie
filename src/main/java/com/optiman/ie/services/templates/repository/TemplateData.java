@@ -10,7 +10,13 @@ import java.time.format.DateTimeFormatter;
 @Getter
 @Setter
 @Entity
-@Table(name = "template_data")
+@Table(
+        name = "template_data",
+        indexes = {
+                @Index(name = "idx_template_data_create_date", columnList = "create_date"),
+                @Index(name = "idx_template_data_temp_header_id", columnList = "temp_header_id")
+        }
+)
 public class TemplateData {
 
     @Id
@@ -20,7 +26,7 @@ public class TemplateData {
     @Column(name = "data_category", length = 100)
     private String dataCategory;
 
-   @Column(name = "content_detail", columnDefinition = "TEXT")
+    @Column(name = "content_detail", columnDefinition = "TEXT")
     private String contentDetail;
 
     @Column(name = "create_by", length = 50)
@@ -29,13 +35,12 @@ public class TemplateData {
     @Column(name = "create_date")
     private LocalDate createDate;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "temp_header_id",referencedColumnName = "temp_header_id",nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY) // better for list performance
+    @JoinColumn(name = "temp_header_id", referencedColumnName = "temp_header_id", nullable = false)
     private TemplateHeader templateHeader;
 
     @Column(name = "heading_name", length = 100)
     private String headingName;
-
 
     @Transient
     public String getCreatedDate() {

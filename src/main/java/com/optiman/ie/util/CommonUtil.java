@@ -13,7 +13,7 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Random;
 
-import static com.optiman.ie.contant.GlobalConst.*;
+import static com.optiman.ie.constant.GlobalConst.*;
 
 @Service
 public class CommonUtil {

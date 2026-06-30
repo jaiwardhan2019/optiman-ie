@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import static com.optiman.ie.contant.GlobalConst.USER_LOGIN_PASSWORD_VALIDATED;
+import static com.optiman.ie.constant.GlobalConst.USER_LOGIN_PASSWORD_VALIDATED;
 
 
 @Slf4j

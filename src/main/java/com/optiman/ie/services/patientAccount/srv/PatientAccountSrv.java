@@ -1,6 +1,6 @@
 package com.optiman.ie.services.patientAccount.srv;
 
-import com.optiman.ie.contant.ServiceType;
+import com.optiman.ie.constant.ServiceType;
 import com.optiman.ie.services.clinicUserAccount.repository.ClinicUser;
 import com.optiman.ie.services.patientAccount.repository.PatientAccount;
 import com.optiman.ie.services.patientAccount.repository.PatientAccountDao;
@@ -8,19 +8,15 @@ import com.optiman.ie.services.patientEhr.model.*;
 import com.optiman.ie.services.patientEhr.srv.EHRService;
 import com.optiman.ie.services.clinicUserAccount.srv.PasswordValidation;
 import com.optiman.ie.util.CommonUtil;
-import com.optiman.ie.util.DateUtil;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.security.Key;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

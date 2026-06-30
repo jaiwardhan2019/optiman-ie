@@ -1,7 +1,7 @@
 package com.optiman.ie.services.patientEhr.srv;
 
 import ch.qos.logback.core.util.StringUtil;
-import com.optiman.ie.contant.ServiceType;
+import com.optiman.ie.constant.ServiceType;
 import com.optiman.ie.services.patientEhr.model.*;
 import com.optiman.ie.util.CommonUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -19,7 +19,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import static com.optiman.ie.contant.ProjectDataMapping.DATA_FOLDER;
+import static com.optiman.ie.constant.ProjectDataMapping.DATA_FOLDER;
 
 
 @Slf4j

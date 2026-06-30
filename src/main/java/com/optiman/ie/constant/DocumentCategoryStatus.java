@@ -1,4 +1,4 @@
-package com.optiman.ie.contant;
+package com.optiman.ie.constant;
 
 import java.util.Collections;
 import java.util.Map;

@@ -74,6 +74,16 @@
            //event.preventDefault();
         });
 
+        function loading() {
+            Swal.fire({
+                title: 'Loading...',
+                html: 'Please wait while the page is loading.',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+        }
 
         </script>
     </c:if>

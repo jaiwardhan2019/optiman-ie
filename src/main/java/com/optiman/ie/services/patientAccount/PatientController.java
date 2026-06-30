@@ -1,6 +1,6 @@
 package com.optiman.ie.services.patientAccount;
 
-import com.optiman.ie.contant.TestTypeSnippet;
+import com.optiman.ie.constant.TestTypeSnippet;
 import com.optiman.ie.repository.ClinicServiceDao;
 import com.optiman.ie.services.clinicUserAccount.repository.ClinicUser;
 import com.optiman.ie.services.clinicUserAccount.repository.ClinicUserDao;
@@ -19,14 +19,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.io.IOException;
-import java.text.ParseException;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static com.optiman.ie.contant.DocumentCategoryStatus.DOC_TYPE_MAP;
+import static com.optiman.ie.constant.DocumentCategoryStatus.DOC_TYPE_MAP;
 
 @Slf4j
 @RestController
@@ -75,6 +73,12 @@ public class PatientController extends ModelViewUtil {
     // 1. Render the create new patient page
     @RequestMapping(value = "create-new-patient", method = {RequestMethod.POST, RequestMethod.GET})
     public ModelAndView createNewPatient(HttpServletRequest request, @RequestBody(required = false) Map<String, String> requestData) throws Exception {
+
+        ModelAndView mv = securityCheckforAdmin(request);
+        if (mv != null) {
+            return mv; // 🔥 STOP execution and go to login page
+        }
+
         ModelAndView modelViewObj = new ModelAndView("create-new-patient");
         return modelViewObj;
     }
@@ -108,10 +112,11 @@ public class PatientController extends ModelViewUtil {
 
     @RequestMapping(value = "manage-patient", method = {RequestMethod.POST, RequestMethod.GET})
     public ModelAndView managePatient(HttpServletRequest request) throws Exception {
-        if (request.getSession().getAttribute("ADMIN_SESSION") == null) {
-            return renderViewPage("admin-login");
+
+        ModelAndView mv = securityCheckforAdmin(request);
+        if (mv != null) {
+            return mv; // 🔥 STOP execution and go to login page
         }
-        ClinicUser adminUser = (ClinicUser) request.getSession().getAttribute("ADMIN_SESSION");
 
         PatientEhr patientEhr = null;
         String patientDemo = "";

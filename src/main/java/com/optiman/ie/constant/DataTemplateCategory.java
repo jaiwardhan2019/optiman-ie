@@ -1,4 +1,4 @@
-package com.optiman.ie.contant;
+package com.optiman.ie.constant;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.optiman.ie.services.templates.repository.TemplateHeader;
